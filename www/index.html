@@ -1,0 +1,3075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+ <meta
+  http-equiv="Content-Security-Policy"
+  content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.b-cdn.net; frame-src https:; connect-src 'self' https://read.rhapsodyofrealities.org https://*.rhapsodyofrealities.org;"
+>
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  >
+
+  <title>Praxi Home</title>
+
+  <link
+    rel="stylesheet"
+    href="home.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/mobile.css"
+  >
+</head>
+
+<body>
+
+<div id="mobileAppBar" class="mobile-app-bar">
+  <button
+    id="mobileMenuButton"
+    class="mobile-menu-button"
+    type="button"
+    aria-label="Open menu"
+  >
+    ☰
+  </button>
+  <div class="mobile-app-title">
+    <img src="assets/praxi-closeup.png" alt="">
+    <span>Praxi</span>
+  </div>
+</div>
+
+<div id="mobileOverlay" class="mobile-overlay"></div>
+
+<button
+  id="rhapsody-reader-back"
+  class="rhapsody-reader-back"
+  type="button"
+  aria-label="Back"
+  title="Back"
+>
+  ←
+</button>
+
+<button
+  id="prayathon-reader-back"
+  class="rhapsody-reader-back prayathon-reader-back"
+  type="button"
+  aria-label="Back to Prayer"
+  title="Back to Prayer"
+>
+  ←
+</button>
+
+  <div id="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <div class="brand">
+        <div class="brand-icon">
+  <img
+    src="assets/praxi-closeup.png"
+    alt="Praxi"
+  >
+</div>
+
+        <div class="brand-name">
+          Praxi
+        </div>
+      </div>
+
+
+      <nav class="navigation">
+
+        <button
+          class="nav-item active"
+          type="button"
+        >
+          <span>🏡</span>
+          <span>Home</span>
+        </button>
+
+        <button
+          class="nav-item"
+          type="button"
+        >
+          <img
+            class="nav-icon"
+            src="assets/Target.gif"
+            alt=""
+          >
+          <span>Daily Goals</span>
+        </button>
+
+        <button
+          class="nav-item"
+          type="button"
+        >
+          <img
+            class="nav-icon nav-icon-wide"
+            src="assets/Prayathon Logo.png"
+            alt=""
+          >
+          <span>Prayer</span>
+        </button>
+
+        <button
+          class="nav-item"
+          type="button"
+        >
+          <img
+            class="nav-icon"
+            src="assets/ROR LOGO.png"
+            alt=""
+          >
+          <span>Rhapsody</span>
+        </button>
+
+        <button
+          class="nav-item"
+          type="button"
+        >
+          <span>📝</span>
+          <span>Quick Notes</span>
+        </button>
+
+        <button
+          class="nav-item"
+          type="button"
+        >
+          <span>🔔</span>
+          <span>Notifications</span>
+        </button>
+
+        <button
+          class="nav-item"
+          type="button"
+        >
+          <img
+            class="nav-icon"
+            src="assets/Brain.gif"
+            alt=""
+          >
+          <span>Moments</span>
+        </button>
+
+      </nav>
+
+
+      <div class="sidebar-bottom">
+
+        <button
+          class="nav-item"
+          type="button"
+        >
+          <span>⚙️</span>
+          <span>Settings</span>
+        </button>
+
+      </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+  <div
+    id="page-home"
+    class="app-page active"
+  >
+
+      <header class="topbar">
+
+        <div>
+          <div class="eyebrow">
+            PRAXI HOME
+          </div>
+
+          <h1 id="home-greeting">
+            Good afternoon, Xavier.
+          </h1>
+
+          <p>
+            Here's what's happening today.
+          </p>
+        </div>
+
+
+        <div class="topbar-actions">
+
+          <button
+            class="icon-button"
+            type="button"
+            title="Notifications"
+          >
+            🔔
+          </button>
+
+          <button
+            class="icon-button"
+            type="button"
+            title="Settings"
+          >
+            ⚙️
+          </button>
+
+        </div>
+
+      </header>
+
+
+   <!-- STATS -->
+<section class="stats-grid">
+
+  <!-- CURRENT STREAK -->
+  <div class="stat-card">
+
+   <div class="stat-icon stat-icon-swap">
+  <span class="stat-icon-static">🔥</span>
+
+  <img
+    class="stat-icon-animated"
+    src="assets/Flame.gif"
+    alt=""
+  >
+</div>
+
+    <div class="stat-label">
+      Current Streak
+    </div>
+
+    <div
+      id="dashboard-streak"
+      class="stat-value"
+    >
+      0 days
+    </div>
+
+  </div>
+
+
+  <!-- TODAY'S GOALS -->
+  <div class="stat-card">
+
+ <div class="stat-icon stat-icon-swap">
+  <span class="stat-icon-static">🎯</span>
+
+  <img
+    class="stat-icon-animated"
+    src="assets/Target.gif"
+    alt=""
+  >
+</div>
+
+    <div class="stat-label">
+      Today's Goals
+    </div>
+
+    <div
+      id="dashboard-goals"
+      class="stat-value"
+    >
+      0 / 0
+    </div>
+
+  </div>
+
+
+  <!-- TODAY'S RHAPSODY -->
+  <div class="stat-card">
+
+  <div class="stat-icon stat-icon-rhapsody">
+  <span>📖</span>
+</div>
+
+    <div class="stat-label">
+      Today's Rhapsody
+    </div>
+
+    <div
+      id="dashboard-rhapsody"
+      class="stat-value"
+    >
+      Unread
+    </div>
+
+  </div>
+
+
+  <!-- MOMENTS -->
+  <div class="stat-card">
+
+  <div class="stat-icon stat-icon-swap">
+  <span class="stat-icon-static">🧠</span>
+
+  <img
+    class="stat-icon-animated"
+    src="assets/Brain.gif"
+    alt=""
+  >
+</div>
+
+    <div class="stat-label">
+      Moments
+    </div>
+
+    <div
+      id="dashboard-moments"
+      class="stat-value"
+    >
+      0
+    </div>
+
+  </div>
+
+</section>
+
+      <!-- TODAY -->
+      <section class="section">
+
+        <div class="section-heading">
+
+          <div>
+            <div class="section-kicker">
+              TODAY
+            </div>
+
+            <h2>
+              Your day at a glance
+            </h2>
+          </div>
+
+        </div>
+
+
+        <div class="content-grid">
+
+          <!-- DAILY GOALS -->
+          <article class="panel goals-panel">
+
+            <div class="panel-header">
+
+              <div class="panel-icon">
+                🎯
+              </div>
+
+              <div>
+
+                <h3>
+                  Daily Goals
+                </h3>
+
+                <p>
+                  Keep moving forward.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div class="progress-area">
+
+              <div class="progress-label">
+
+                <span>
+                  Today's progress
+                </span>
+
+                <strong id="dashboard-goals-progress">
+  0 / 0
+</strong>
+
+              </div>
+
+              <div class="progress-bar">
+
+                <div
+  id="dashboard-goals-progress-bar"
+  class="progress-fill"
+  style="width: 0%;"
+></div>
+
+              </div>
+
+            </div>
+
+
+         <button
+  id="open-daily-goals-dashboard"
+  class="panel-action"
+  type="button"
+>
+  Open Daily Goals →
+</button>
+
+          </article>
+
+
+          <!-- PRAYER -->
+          <article class="panel">
+
+            <div class="panel-header">
+
+              <div class="panel-icon">
+                🙏
+              </div>
+
+              <div>
+
+                <h3>
+                  Prayer
+                </h3>
+
+                <p>
+                  Your private space.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div class="panel-stat">
+
+  <strong
+    id="dashboard-prayer-count"
+  >
+    0
+  </strong>
+
+<span id="dashboard-prayer-label">
+  active requests
+</span>
+
+</div>
+
+
+<button
+  id="open-prayer-dashboard"
+  class="panel-action"
+  type="button"
+>
+  Open Prayer →
+</button>
+
+          </article>
+
+
+          <!-- RHAPSODY -->
+          <article class="panel">
+
+            <div class="panel-header">
+
+              <div class="panel-icon">
+                📖
+              </div>
+
+              <div>
+
+                <h3>
+                  Today's Rhapsody
+                </h3>
+
+                <p>
+                  Your daily reading.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div class="rhapsody-status">
+
+  <span
+    id="dashboard-rhapsody-status-dot"
+    class="status-dot"
+  ></span>
+
+  <span
+    id="dashboard-rhapsody-status"
+  >
+    Not read yet
+  </span>
+
+</div>
+
+
+            <button
+  id="open-rhapsody-dashboard"
+  class="panel-action"
+  type="button"
+>
+  Open Rhapsody →
+</button>
+
+          </article>
+
+        </div>
+
+      </section>
+
+
+      <!-- RECENT ACTIVITY -->
+      <section class="section">
+
+        <div class="section-heading">
+
+          <div>
+            <div class="section-kicker">
+              RECENT ACTIVITY
+            </div>
+
+            <h2>
+              What's been happening
+            </h2>
+          </div>
+
+        </div>
+
+
+        <div class="activity-panel">
+
+          <div class="activity-item">
+
+            <span class="activity-icon">
+              🎯
+            </span>
+
+            <div class="activity-content">
+
+              <strong>
+                Goal completed
+              </strong>
+
+              <span>
+                Finish GIS assignment
+              </span>
+
+            </div>
+
+            <time>
+              2:14 PM
+            </time>
+
+          </div>
+
+
+          <div class="activity-item">
+
+            <span class="activity-icon">
+              📖
+            </span>
+
+            <div class="activity-content">
+
+              <strong>
+                Rhapsody reminder
+              </strong>
+
+              <span>
+                Today's Rhapsody is ready.
+              </span>
+
+            </div>
+
+            <time>
+              10:03 AM
+            </time>
+
+          </div>
+
+
+          <div class="activity-item">
+
+            <span class="activity-icon">
+              🙏
+            </span>
+
+            <div class="activity-content">
+
+              <strong>
+                Private prayer reminder
+              </strong>
+
+              <span>
+                A prayer request is waiting.
+              </span>
+
+            </div>
+
+            <time>
+              8:30 AM
+            </time>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- PRAxi MESSAGE -->
+      <section class="praxi-message">
+
+        <div class="praxi-message-pet">
+  <img
+    src="assets/praxi-closeup.png"
+    alt="Praxi"
+  >
+</div>
+
+        <div>
+
+          <div class="praxi-message-label">
+            PRAXI
+          </div>
+
+          <p>
+            Small steps still count.
+            Let's make today worthwhile.
+          </p>
+
+        </div>
+
+       </section>
+
+  </div>
+
+ <!-- =====================================================
+       DAILY GOALS PAGE
+       ===================================================== -->
+
+  <div
+    id="page-daily-goals"
+    class="app-page"
+  >
+
+
+    <div class="daily-goals-page">
+
+      <header class="daily-goals-header">
+
+        <div>
+          <h1>🎯 Daily Goals</h1>
+
+          <p>
+            Your focus for today.
+          </p>
+        </div>
+
+      </header>
+
+
+      <nav class="daily-goals-tabs">
+
+        <button
+          type="button"
+          class="daily-goals-tab active"
+          data-tab="today"
+        >
+          Today
+        </button>
+
+        <button
+          type="button"
+          class="daily-goals-tab"
+          data-tab="history"
+        >
+          History
+        </button>
+
+      </nav>
+
+
+      <section
+        id="todaySection"
+        class="daily-goals-section"
+      >
+
+        <div class="section-heading">
+
+          <div>
+            <h2>Today's Goals</h2>
+
+            <p>
+              What would you like to accomplish today?
+            </p>
+          </div>
+
+        </div>
+
+
+        <div
+          id="todayGoals"
+          class="goals-list"
+        >
+          <!-- Goals will appear here -->
+        </div>
+
+
+        <button
+          type="button"
+          id="addGoalButton"
+          class="add-goal-button"
+        >
+          + Add Daily Goal
+        </button>
+
+
+        <div
+          id="todayProgress"
+          class="progress-card"
+        >
+
+          <div class="progress-text">
+            <strong>0 / 0 completed</strong>
+          </div>
+
+          <div class="progress-track">
+
+            <div
+              id="progressBar"
+              class="progress-bar"
+              style="width: 0%;"
+            ></div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <section
+        id="historySection"
+        class="daily-goals-section hidden"
+      >
+
+        <div class="section-heading">
+
+          <div>
+            <h2>Goal History</h2>
+
+            <p>
+              A look back at your previous days.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div
+          id="goalHistory"
+          class="history-list"
+        >
+          <!-- Previous days will appear here -->
+        </div>
+
+      </section>
+
+    </div>
+
+
+    <!-- ===================================================
+         ADD / EDIT GOAL DIALOG
+         =================================================== -->
+
+    <div
+  id="addGoalDialog"
+  class="goal-dialog-overlay hidden"
+>
+
+      <div class="goal-dialog">
+
+        <h2>
+          Add Daily Goal
+        </h2>
+
+        <p>
+          What would you like to accomplish today?
+        </p>
+
+        <input
+          type="text"
+          id="goalInput"
+          placeholder="Enter your goal..."
+          maxlength="120"
+        >
+
+        <div class="goal-dialog-actions">
+
+          <button
+            type="button"
+            id="cancelGoalButton"
+            class="goal-dialog-cancel"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="button"
+            id="confirmGoalButton"
+            class="goal-dialog-confirm"
+          >
+            Add Goal
+          </button>
+
+        </div>
+
+      </div>
+
+     </div>
+
+  </div>
+
+<!-- =====================================================
+     PRAYER PAGE
+     ===================================================== -->
+
+<div
+  id="page-prayer"
+  class="app-page"
+>
+
+  <div class="prayer-page">
+
+    <!-- PAGE HEADER -->
+
+    <section class="prayer-page-header">
+
+  <div class="prayer-page-header-content">
+
+    <div>
+
+      <div class="section-kicker">
+        PRAYER
+      </div>
+
+      <h1>
+        My Prayer Space 🙏
+      </h1>
+
+      <p>
+        Bring your requests, stay in prayer, and keep track
+        of the things you're believing God for.
+      </p>
+
+    </div>
+
+
+    <!-- ROTATING SCRIPTURE -->
+
+    <div
+      class="prayer-scripture"
+      aria-live="polite"
+    >
+
+      <div class="prayer-scripture-label">
+        SCRIPTURE
+      </div>
+
+      <div
+        id="prayer-scripture-text"
+        class="prayer-scripture-text"
+      >
+        Call unto me, and I will answer thee, and shew thee
+        great and mighty things, which thou knowest not.
+      </div>
+
+      <div
+        id="prayer-scripture-reference"
+        class="prayer-scripture-reference"
+      >
+        Jeremiah 33:3
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+    <!-- MY PRAYER REQUESTS -->
+
+    <section class="section prayer-requests-section">
+
+      <div class="section-heading">
+
+        <div>
+
+          <div class="section-kicker">
+            MY PRAYER REQUESTS
+          </div>
+
+          <h2>
+            What are you praying about?
+          </h2>
+
+          <p>
+            Keep your personal prayer requests close.
+          </p>
+
+        </div>
+
+
+        <button
+          id="add-prayer-request-button"
+          class="prayer-add-button"
+          type="button"
+        >
+          + Add Prayer Request
+        </button>
+
+      </div>
+
+
+      <div
+        id="prayer-requests-list"
+        class="prayer-requests-list"
+      >
+
+        <!-- Prayer requests will appear here -->
+
+        <div
+          id="prayer-empty-state"
+          class="prayer-empty-state"
+        >
+
+          <div class="prayer-empty-icon">
+            🙏
+          </div>
+
+          <h3>
+            Your prayer requests will appear here.
+          </h3>
+
+          <p>
+            Write down something you're praying about
+            and keep it close throughout your journey.
+          </p>
+
+          <button
+            id="prayer-empty-add-button"
+            class="prayer-empty-action"
+            type="button"
+          >
+            + Add Your First Prayer Request
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <button
+        id="view-prayer-history-button"
+        class="prayer-history-button"
+        type="button"
+      >
+        View Prayer History →
+      </button>
+
+    </section>
+
+
+    <!-- LIVE PRAYER -->
+
+    <section class="section">
+
+      <div class="section-heading">
+
+        <div>
+
+          <div class="section-kicker">
+            LIVE PRAYER
+          </div>
+
+          <h2>
+            Pray together.
+          </h2>
+
+          <p>
+            Join live prayer programs and special sessions.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <article class="prayer-live-card">
+
+        <div class="prayer-live-indicator">
+          <span class="prayer-live-dot"></span>
+          LIVE
+        </div>
+
+
+        <div class="prayer-live-content">
+
+          <div class="prayer-live-icon">
+  <img
+    src="assets/Flame.gif"
+    alt=""
+  />
+</div>
+
+          <div>
+
+            <h3>
+              Pastor Chris Live Prayathon
+            </h3>
+
+            <p>
+              Join the live prayer session and pray along
+              with others around the world.
+            </p>
+
+          </div>
+
+        </div>
+
+<div class="prayer-live-logo">
+  <img
+    src="assets/Prayathon Logo.png"
+    alt="Pastor Chris Live Pray-A-Thon"
+  />
+</div>
+
+        <button
+          id="join-prayathon-button"
+          class="prayer-live-button"
+          type="button"
+        >
+          Join Live →
+        </button>
+
+      </article>
+
+    </section>
+
+
+    <!-- TODAY'S CONFESSION -->
+
+    <section class="section">
+
+      <div class="section-heading">
+
+        <div>
+
+          <div class="section-kicker">
+            TODAY'S CONFESSION
+          </div>
+
+          <h2>
+            Speak God's Word.
+          </h2>
+
+          <p>
+            Start your day with a faith-filled confession.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <article class="prayer-confession-card">
+
+        <div class="prayer-confession-icon">
+  📢
+</div>
+
+        <div class="prayer-confession-content">
+
+          <div class="prayer-confession-label">
+            CONFESSION FOR TODAY
+          </div>
+
+         <h3 id="today-confession-title">
+  I walk in divine wisdom.
+</h3>
+
+<p id="today-confession-text">
+  I am filled with the wisdom of God.
+  I walk in divine insight, understanding,
+  and direction. My thoughts are guided by
+  God's Word, and I make wise decisions today.
+</p>
+
+        </div>
+
+
+        <button
+          id="open-confession-button"
+          class="prayer-confession-button"
+          type="button"
+        >
+          Read Today's Confession →
+        </button>
+
+      </article>
+
+    </section>
+
+
+    <!-- PRAYER JOURNEY -->
+
+    <section class="section prayer-journey-section">
+
+      <div class="section-heading">
+
+        <div>
+
+          <div class="section-kicker">
+            YOUR PRAYER JOURNEY
+          </div>
+
+          <h2>
+            Keep believing.
+          </h2>
+
+          <p>
+            A simple look at your prayer activity.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="prayer-stats-grid">
+
+        <article class="prayer-stat-card">
+
+          <div class="prayer-stat-icon">
+            🙏
+          </div>
+
+          <div
+            id="prayer-active-count"
+            class="prayer-stat-value"
+          >
+            0
+          </div>
+
+          <div class="prayer-stat-label">
+            ACTIVE REQUESTS
+          </div>
+
+        </article>
+
+
+        <article class="prayer-stat-card">
+
+          <div class="prayer-stat-icon">
+            ✨
+          </div>
+
+          <div
+            id="prayer-answered-count"
+            class="prayer-stat-value"
+          >
+            0
+          </div>
+
+          <div class="prayer-stat-label">
+            ANSWERED PRAYERS
+          </div>
+
+        </article>
+
+
+        <article class="prayer-stat-card">
+
+          <div class="prayer-stat-icon">
+            📅
+          </div>
+
+          <div
+            id="prayer-month-count"
+            class="prayer-stat-value"
+          >
+            0
+          </div>
+
+          <div class="prayer-stat-label">
+            THIS MONTH
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+
+  </div>
+
+
+  <!-- ===================================================
+       ADD PRAYER REQUEST DIALOG
+       =================================================== -->
+
+  <div
+    id="prayer-request-dialog"
+    class="prayer-dialog-overlay hidden"
+  >
+
+    <div
+      class="prayer-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="prayer-dialog-title"
+    >
+
+      <div class="prayer-dialog-icon">
+        🙏
+      </div>
+
+      <h2 id="prayer-dialog-title">
+        Add Prayer Request
+      </h2>
+
+      <p>
+        Write down something you'd like to keep
+        in prayer.
+      </p>
+
+
+      <label
+        for="prayer-title-input"
+        class="prayer-dialog-label"
+      >
+        Prayer request
+      </label>
+
+      <input
+        id="prayer-title-input"
+        class="prayer-dialog-input"
+        type="text"
+        placeholder="What are you praying about?"
+        maxlength="120"
+        autocomplete="off"
+      >
+
+
+      <label
+        for="prayer-details-input"
+        class="prayer-dialog-label"
+      >
+        Details
+      </label>
+
+      <textarea
+        id="prayer-details-input"
+        class="prayer-dialog-textarea"
+        placeholder="Write more about your prayer request..."
+        maxlength="1000"
+      ></textarea>
+
+
+      <div class="prayer-dialog-actions">
+
+        <button
+          id="cancel-prayer-button"
+          class="prayer-dialog-cancel"
+          type="button"
+        >
+          Cancel
+        </button>
+
+        <button
+          id="save-prayer-button"
+          class="prayer-dialog-save"
+          type="button"
+        >
+          Save Prayer Request
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+<!-- =========================================================
+     PRAYER HISTORY DIALOG
+     ========================================================= -->
+
+<div
+  id="prayer-history-dialog"
+  class="prayer-dialog-overlay hidden"
+>
+  <div
+    class="prayer-history-dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="prayer-history-title"
+  >
+
+    <div class="prayer-dialog-icon">📖</div>
+
+    <div class="prayer-history-header">
+      <div>
+        <h2 id="prayer-history-title">
+          Prayer History
+        </h2>
+
+        <p>
+          Look back at the things you've prayed about
+          and the prayers you've marked as answered.
+        </p>
+      </div>
+
+      <button
+        id="close-prayer-history-button"
+        class="prayer-history-close"
+        type="button"
+        aria-label="Close prayer history"
+      >
+        ×
+      </button>
+    </div>
+
+    <div
+      id="prayer-history-list"
+      class="prayer-history-list"
+    ></div>
+
+  </div>
+</div>
+
+</div>
+
+<!-- =====================================================
+     CONFESSION PAGE
+     ===================================================== -->
+
+<div
+  id="page-confessions"
+  class="app-page"
+>
+
+  <div class="confession-page">
+
+    <!-- PAGE HEADER -->
+
+    <section class="confession-page-header">
+
+  <button
+    id="confession-back-button"
+    class="confession-back-button"
+    type="button"
+  >
+    ← Back to Prayer
+  </button>
+
+  <div class="section-kicker">
+    CONFESSIONS FOR LIVING
+  </div>
+
+  <h1>
+    Say it boldly!
+  </h1>
+
+  <p>
+    Build your day around the truth of God's Word.
+  </p>
+
+</section>
+
+
+    <!-- CONFESSION READER -->
+
+    <section class="confession-reader">
+
+      <div class="confession-reader-icon">
+  📢
+</div>
+
+      <div class="confession-reader-label">
+        CONFESSION
+      </div>
+
+      <h2 id="confession-reader-title">
+        I walk in divine wisdom.
+      </h2>
+
+      <div
+        id="confession-reader-text"
+        class="confession-reader-text"
+      >
+        I am filled with the wisdom of God.
+        I walk in divine insight, understanding,
+        and direction. My thoughts are guided by
+        God's Word, and I make wise decisions today.
+      </div>
+
+
+      <!-- DECLARE BUTTON -->
+
+      <button
+        id="declare-confession-button"
+        class="declare-confession-button"
+        type="button"
+      >
+        🔥 I DECLARE THIS
+      </button>
+
+    </section>
+
+
+    <!-- LIBRARY PREVIEW -->
+
+    <section class="section confession-library-preview">
+
+      <div class="section-heading">
+
+        <div>
+
+          <div class="section-kicker">
+            CONFESSION LIBRARY
+          </div>
+
+          <h2>
+            Speak God's Word daily.
+          </h2>
+
+          <p>
+            Explore confessions for different areas
+            of your life and spiritual walk.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div
+        id="confession-category-grid"
+        class="confession-category-grid"
+      >
+
+        <!-- Categories will be generated here -->
+
+      </div>
+
+    </section>
+
+<!-- =====================================================
+     CONFESSION CATEGORY VIEW
+     ===================================================== -->
+
+<section
+  id="confession-category-view"
+  class="confession-category-view"
+>
+
+  <div class="confession-category-header">
+
+    <button
+      id="confession-category-back-button"
+      class="confession-back-button"
+      type="button"
+    >
+      ← Back to Library
+    </button>
+
+    <div class="section-kicker">
+      CONFESSION LIBRARY
+    </div>
+
+    <h2 id="confession-category-title">
+      Wisdom
+    </h2>
+
+    <p id="confession-category-description">
+      Confessions for wisdom, understanding,
+      and divine direction.
+    </p>
+
+  </div>
+
+
+  <div
+    id="confession-list"
+    class="confession-list"
+  >
+
+    <!-- Confessions will be generated here -->
+
+  </div>
+
+</section>
+
+  </div>
+
+</div>
+
+<!-- =====================================================
+     RHAPSODY PAGE
+     ===================================================== -->
+
+<div
+  id="page-rhapsody"
+  class="app-page"
+>
+
+  <div class="rhapsody-page">
+
+<!-- Rhapsody Completion Celebration -->
+
+<div
+  id="rhapsody-streak-celebration"
+  class="rhapsody-streak-celebration hidden"
+>
+
+  <div
+  class="rhapsody-celebration-fire"
+  tabindex="0"
+  aria-label="Rhapsody streak flame"
+>
+  <img
+    class="rhapsody-flame-static"
+    src="assets/Flame.png"
+    alt=""
+  >
+
+  <img
+    class="rhapsody-flame-hover"
+    src="assets/Flame.gif"
+    alt=""
+  >
+</div>
+
+  <div class="rhapsody-celebration-content">
+
+    <div class="rhapsody-celebration-kicker">
+      RHAPSODY STREAK
+    </div>
+
+    <h2>
+      You're on a roll!
+    </h2>
+
+    <div
+      id="rhapsody-celebration-streak"
+      class="rhapsody-celebration-streak"
+    >
+      1 DAY
+    </div>
+
+    <p
+      id="rhapsody-celebration-message"
+    >
+      Keep going. One day at a time.
+    </p>
+
+  </div>
+
+  <button
+    id="rhapsody-celebration-close"
+    class="rhapsody-celebration-close"
+    type="button"
+    aria-label="Close celebration"
+  >
+    ×
+  </button>
+
+</div>
+
+    <!-- PAGE HEADER -->
+
+    <section class="rhapsody-page-header">
+
+      <div>
+
+        <div class="section-kicker">
+          DAILY DEVOTIONAL
+        </div>
+
+        <h1>
+          Rhapsody of Realities
+        </h1>
+
+        <p>
+          Your daily reading and Rhapsody journey.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- TODAY'S RHAPSODY -->
+
+    <section class="rhapsody-hero">
+
+      <div class="rhapsody-hero-content">
+
+        <div class="rhapsody-hero-label">
+          📖 TODAY'S RHAPSODY
+        </div>
+
+        <div
+          id="rhapsody-page-date"
+          class="rhapsody-hero-date"
+        >
+          September 24, 2026
+        </div>
+
+        <h2>
+          Today's Rhapsody is ready.
+        </h2>
+
+        <p>
+          Open the official Rhapsody website
+          to read today's complete devotional.
+        </p>
+
+        <div class="rhapsody-hero-actions">
+
+          <button
+            id="rhapsody-read-now"
+            class="rhapsody-read-button"
+            type="button"
+          >
+            📖 Read Now
+          </button>
+
+        </div>
+
+        <div
+          id="rhapsody-page-status"
+          class="rhapsody-page-status"
+        >
+
+          <span
+            id="rhapsody-page-status-dot"
+            class="rhapsody-page-status-dot"
+          ></span>
+
+          <span
+            id="rhapsody-page-status-text"
+          >
+            Not read yet
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="rhapsody-hero-decoration">
+  <div class="rhapsody-book-icon">
+    <img
+  src="assets/ROR LOGO.png"
+  alt="Rhapsody of Realities"
+/>
+  </div>
+</div>
+
+    </section>
+
+<!-- Rhapsody Completion Popup -->
+<div
+  id="rhapsody-completion-overlay"
+  class="rhapsody-completion-overlay hidden"
+>
+
+  <div
+    class="rhapsody-completion-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="rhapsody-completion-title"
+  >
+
+    <div class="rhapsody-completion-icon">
+      📖
+    </div>
+
+    <div class="rhapsody-completion-kicker">
+      RHAPSODY COMPLETED
+    </div>
+
+    <h2 id="rhapsody-completion-title">
+      What was today's topic?
+    </h2>
+
+    <p>
+      Add the topic you read today to complete
+      your Rhapsody reading and update your streak.
+    </p>
+
+    <label
+      for="rhapsody-topic-input"
+      class="rhapsody-topic-label"
+    >
+      Today's topic
+    </label>
+
+    <input
+      id="rhapsody-topic-input"
+      class="rhapsody-topic-input"
+      type="text"
+      placeholder="Enter the topic..."
+      autocomplete="off"
+    />
+
+    <div class="rhapsody-completion-actions">
+
+      <button
+        id="rhapsody-completion-cancel"
+        class="rhapsody-completion-cancel"
+        type="button"
+      >
+        Cancel
+      </button>
+
+      <button
+        id="rhapsody-completion-submit"
+        class="rhapsody-completion-submit"
+        type="button"
+      >
+        Complete Reading
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+    <!-- RHAPSODY JOURNEY -->
+
+    <section class="section rhapsody-journey-section">
+
+      <div class="section-heading">
+
+        <div>
+
+          <div class="section-kicker">
+            YOUR RHAPSODY JOURNEY
+          </div>
+
+          <h2>
+            Keep the streak going.
+          </h2>
+
+        </div>
+
+      </div>
+
+
+      <div class="rhapsody-dashboard-grid">
+
+        <!-- WEEKLY STREAK -->
+
+        <article
+          class="rhapsody-streak-card"
+          id="rhapsody-streak-card"
+        >
+
+          <div class="rhapsody-streak-glow"></div>
+
+          <div
+  class="rhapsody-streak-icon"
+  tabindex="0"
+  aria-label="Rhapsody streak flame"
+>
+  <img
+    class="rhapsody-flame-static"
+    src="assets/Flame.png"
+    alt=""
+  >
+
+  <img
+    class="rhapsody-flame-hover"
+    src="assets/Flame.gif"
+    alt=""
+  >
+</div>
+
+          <div
+            id="rhapsody-streak-count"
+            class="rhapsody-streak-count"
+          >
+            0
+          </div>
+
+          <div class="rhapsody-streak-label">
+            DAY STREAK
+          </div>
+
+          <div
+            id="rhapsody-week"
+            class="rhapsody-week"
+          >
+
+            <div class="rhapsody-day">
+              <span>M</span>
+              <strong>•</strong>
+            </div>
+
+            <div class="rhapsody-day">
+              <span>T</span>
+              <strong>•</strong>
+            </div>
+
+            <div class="rhapsody-day">
+              <span>W</span>
+              <strong>•</strong>
+            </div>
+
+            <div class="rhapsody-day">
+              <span>T</span>
+              <strong>•</strong>
+            </div>
+
+            <div class="rhapsody-day">
+              <span>F</span>
+              <strong>•</strong>
+            </div>
+
+            <div class="rhapsody-day">
+              <span>S</span>
+              <strong>•</strong>
+            </div>
+
+            <div class="rhapsody-day">
+              <span>S</span>
+              <strong>•</strong>
+            </div>
+
+          </div>
+
+        </article>
+
+
+        <!-- TODAY'S READING -->
+
+        <article class="rhapsody-reading-summary">
+
+          <div class="rhapsody-summary-header">
+
+            <div class="panel-icon">
+              📖
+            </div>
+
+            <div>
+
+              <h3>
+                Today's Reading
+              </h3>
+
+              <p>
+                Your latest Rhapsody activity.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="rhapsody-reading-details">
+
+            <div>
+
+              <span>
+                Topic
+              </span>
+
+              <strong
+                id="rhapsody-today-topic"
+              >
+                Not recorded
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <span>
+                Read at
+              </span>
+
+              <strong
+                id="rhapsody-today-time"
+              >
+                Not recorded
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <span>
+                Status
+              </span>
+
+              <strong
+                id="rhapsody-today-reading-status"
+              >
+                Not read yet
+              </strong>
+
+            </div>
+
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- READING HISTORY -->
+
+    <section class="section">
+
+      <div class="section-heading">
+
+        <div>
+
+          <div class="section-kicker">
+            READING HISTORY
+          </div>
+
+          <h2>
+            Your recent Rhapsody readings.
+          </h2>
+
+        </div>
+
+      </div>
+
+
+      <div
+        id="rhapsody-history"
+        class="rhapsody-history"
+      >
+
+        <div class="rhapsody-history-empty">
+
+          <div>
+            📖
+          </div>
+
+          <p>
+            Your Rhapsody reading history
+            will appear here.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</div>
+
+<!-- =========================================================
+     QUICK NOTES PAGE
+     ========================================================= -->
+
+<div
+  id="page-quick-notes"
+  class="app-page"
+>
+
+  <div class="quick-notes-page">
+
+    <!-- PAGE HEADER -->
+
+    <section class="quick-notes-header">
+
+      <div>
+
+        <div class="section-kicker">
+          QUICK NOTES
+        </div>
+
+        <h1>
+          Write the Vision 📝
+        </h1>
+
+        <p>
+          Keep your ideas, reminders, thoughts,
+          and little things worth remembering.
+        </p>
+
+      </div>
+
+
+      <button
+        id="new-note-button"
+        class="quick-notes-new-button"
+        type="button"
+      >
+        + New Note
+      </button>
+
+    </section>
+
+
+    <!-- SEARCH -->
+
+    <section class="quick-notes-search">
+
+      <div class="quick-notes-search-box">
+
+        <span class="quick-notes-search-icon">
+          🔍
+        </span>
+
+        <input
+          id="notes-search-input"
+          type="text"
+          placeholder="Search your notes..."
+          autocomplete="off"
+        >
+
+      </div>
+
+    </section>
+
+
+    <!-- PINNED NOTES -->
+
+    <section
+      id="pinned-notes-section"
+      class="quick-notes-section"
+    >
+
+      <div class="quick-notes-section-heading">
+
+        <div>
+
+          <div class="section-kicker">
+            PINNED
+          </div>
+
+          <h2>
+            Keep important notes close.
+          </h2>
+
+        </div>
+
+      </div>
+
+
+      <div
+        id="pinned-notes-grid"
+        class="notes-grid"
+      >
+
+        <!-- Pinned notes will appear here -->
+
+      </div>
+
+    </section>
+
+<!-- NOTE TAG FILTERS -->
+
+<section class="quick-notes-tag-filters">
+
+  <div class="quick-notes-tag-filters-header">
+    <div class="section-kicker">
+      TAGS
+    </div>
+  </div>
+
+  <div
+    id="quick-notes-tag-filter-list"
+    class="quick-notes-tag-filter-list"
+  >
+    <!-- Tag filters will appear here -->
+  </div>
+
+</section>
+
+    <!-- ALL NOTES -->
+
+    <section class="quick-notes-section">
+
+      <div class="quick-notes-section-heading">
+
+        <div>
+
+          <div class="section-kicker">
+            ALL NOTES
+          </div>
+
+          <h2>
+            Your notes.
+          </h2>
+
+        </div>
+
+      </div>
+
+
+      <div
+        id="all-notes-list"
+        class="notes-list"
+      >
+
+        <!-- Notes will appear here -->
+
+      </div>
+
+    </section>
+
+    <!-- EMPTY STATE -->
+
+    <div
+      id="notes-empty-state"
+      class="notes-empty-state"
+      style="display: none;"
+    >
+
+      <div class="notes-empty-icon">
+        📝
+      </div>
+
+      <h2>
+        Nothing here yet.
+      </h2>
+
+      <p>
+        Create your first note and get that thought
+        out of your head and somewhere useful.
+      </p>
+
+      <button
+        id="empty-new-note-button"
+        class="quick-notes-new-button"
+        type="button"
+      >
+        + Create Your First Note
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- =========================================================
+     NEW NOTE PAGE
+     ========================================================= -->
+
+<div
+  id="page-new-note"
+  class="app-page"
+>
+
+  <div class="new-note-page">
+
+    <!-- HEADER -->
+
+    <section class="new-note-header">
+
+      <button
+        id="back-to-notes-button"
+        class="new-note-back-button"
+        type="button"
+      >
+        ← Quick Notes
+      </button>
+
+     <div class="new-note-actions">
+
+  <span
+    id="new-note-save-status"
+    class="new-note-save-status"
+  >
+    Unsaved
+  </span>
+
+
+  <select
+    id="new-note-theme"
+    class="new-note-theme-select"
+    title="Note theme"
+  >
+    <option value="praxi">Praxi Dark</option>
+    <option value="paper">Paper</option>
+    <option value="midnight">Midnight Blue</option>
+  </select>
+
+
+  <button
+    id="save-new-note-button"
+    class="quick-notes-new-button"
+    type="button"
+  >
+    Save Note
+  </button>
+
+</div>
+
+    </section>
+
+
+    <!-- EDITOR -->
+
+    <section class="new-note-editor">
+
+      <input
+        id="new-note-title"
+        class="new-note-title"
+        type="text"
+        placeholder="Note title..."
+        autocomplete="off"
+      >
+
+<!-- NOTE TAGS -->
+
+<div class="new-note-tags">
+
+  <div
+    id="new-note-tags-list"
+    class="new-note-tags-list"
+  >
+    <!-- Selected tags appear here -->
+  </div>
+
+  <div class="new-note-tag-picker">
+
+    <div class="new-note-tag-input-row">
+
+      <input
+        id="new-note-tag-input"
+        class="new-note-tag-input"
+        type="text"
+        placeholder="Add a tag, then press Enter"
+        autocomplete="off"
+        enterkeyhint="done"
+      >
+
+      <button
+        type="button"
+        id="new-note-tag-add"
+        class="new-note-tag-add"
+        aria-label="Add tag"
+      >
+        ＋
+      </button>
+
+    </div>
+
+    <div
+      id="new-note-tag-dropdown"
+      class="new-note-tag-dropdown"
+      style="display: none;"
+    >
+      <!-- Existing tags appear here -->
+    </div>
+
+  </div>
+
+</div>
+
+      <!-- FORMATTING TOOLBAR -->
+
+      <div class="new-note-toolbar">
+
+        <button
+          type="button"
+          data-command="bold"
+          title="Bold"
+        >
+          <strong>B</strong>
+        </button>
+
+        <button
+          type="button"
+          data-command="italic"
+          title="Italic"
+        >
+          <em>I</em>
+        </button>
+
+        <button
+          type="button"
+          data-command="underline"
+          title="Underline"
+        >
+          <u>U</u>
+        </button>
+
+        <span class="toolbar-divider"></span>
+
+        <button
+          type="button"
+          data-command="insertUnorderedList"
+          title="Bullet List"
+        >
+          • List
+        </button>
+
+        <button
+          type="button"
+          data-command="insertOrderedList"
+          title="Numbered List"
+        >
+          1. List
+        </button>
+
+      </div>
+
+
+      <!-- NOTE BODY -->
+
+      <div
+        id="new-note-body"
+        class="new-note-body"
+        contenteditable="true"
+        data-placeholder="Start writing..."
+      ></div>
+
+    </section>
+
+  </div>
+
+</div>
+
+<!-- =========================================================
+     NOTIFICATIONS PAGE
+     ========================================================= -->
+
+<div
+  id="page-notifications"
+  class="app-page"
+>
+
+  <div class="section">
+
+    <div class="section-heading">
+
+      <div>
+
+        <div class="section-kicker">
+          NOTIFICATIONS
+        </div>
+
+        <h2>
+          What Praxi would say right now
+        </h2>
+
+        <p>
+          Praxi's messages change with the time of day. This is the
+          current period, and the schedule it follows.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <article class="panel notif-current">
+
+      <div class="panel-header">
+
+        <div class="panel-icon">
+          🔔
+        </div>
+
+        <div>
+
+          <h3 id="notif-current-period">
+            Now
+          </h3>
+
+          <p>
+            Current message period
+          </p>
+
+        </div>
+
+      </div>
+
+      <p
+        id="notif-current-message"
+        class="notif-current-message"
+      >
+        …
+      </p>
+
+    </article>
+
+
+    <div
+      id="notif-schedule"
+      class="notif-schedule"
+    ></div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     MOMENTS PAGE
+     ========================================================= -->
+
+<div
+  id="page-moments"
+  class="app-page"
+>
+
+  <div class="section">
+
+    <div class="section-heading">
+
+      <div>
+
+        <div class="section-kicker">
+          MOMENTS
+        </div>
+
+        <h2>
+          Your activity with Praxi
+        </h2>
+
+        <p>
+          A quiet ledger of the things you and Praxi did together.
+        </p>
+
+      </div>
+
+    </div>
+
+    <div
+      id="moments-list"
+      class="activity-panel"
+    >
+
+      <div class="activity-item">
+
+        <span class="activity-icon">
+          🧠
+        </span>
+
+        <div class="activity-content">
+
+          <strong>
+            Nothing yet
+          </strong>
+
+          <span>
+            Moments will appear here as you use Praxi.
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     SETTINGS PAGE
+     ========================================================= -->
+
+<div
+  id="page-settings"
+  class="app-page"
+>
+
+  <div class="settings-page-header">
+    <h1>☁️ Praxi Settings</h1>
+    <p>
+      Tune Praxi's behavior without editing the source code.
+    </p>
+  </div>
+
+
+  <div class="settings-card">
+
+    <h2>General</h2>
+
+    <div class="settings-toggles">
+
+      <label class="settings-toggle">
+        <input
+          id="settings-enabled"
+          type="checkbox"
+        >
+        Enable Praxi
+      </label>
+
+      <label class="settings-toggle">
+        <input
+          id="settings-alwaysOnTop"
+          type="checkbox"
+        >
+        Always on top
+      </label>
+
+      <label class="settings-toggle">
+        <input
+          id="settings-soundEnabled"
+          type="checkbox"
+        >
+        Sounds
+      </label>
+
+    </div>
+
+  </div>
+
+
+  <!-- Interface -->
+  <div class="settings-card">
+  <h2>Interface</h2>
+
+  <label for="settings-theme">
+    Theme
+  </label>
+
+  <select
+    id="settings-theme"
+    class="settings-select"
+  >
+    <option value="dark">Dark</option>
+    <option value="light">Light</option>
+    <option value="system">System</option>
+  </select>
+
+    <p class="settings-tip">
+    Choose how the Praxi interface should appear.
+    System follows your Windows appearance setting.
+  </p>
+
+  <div class="settings-grid">
+
+      <div>
+        <label>
+          Pet size
+          <span
+            id="settings-petSizeValue"
+            class="settings-range-value"
+          ></span>
+        </label>
+
+        <input
+          id="settings-petSize"
+          type="range"
+          min="0.55"
+          max="1.35"
+          step="0.05"
+        >
+      </div>
+
+      <div>
+        <label>
+          Animation speed
+          <span
+            id="settings-animationSpeedValue"
+            class="settings-range-value"
+          ></span>
+        </label>
+
+        <input
+          id="settings-animationSpeed"
+          type="range"
+          min="0.5"
+          max="2"
+          step="0.1"
+        >
+      </div>
+
+      <div>
+        <label>
+          Dormant eye size
+          <span
+            id="settings-dormantEyeSizeValue"
+            class="settings-range-value"
+          ></span>
+        </label>
+
+        <input
+          id="settings-dormantEyeSize"
+          type="range"
+          min="50"
+          max="180"
+          step="5"
+        >
+      </div>
+
+      <div>
+        <label>
+          Dormant eye rotation
+          <span
+            id="settings-dormantEyeRotationValue"
+            class="settings-range-value"
+          ></span>
+        </label>
+
+        <input
+          id="settings-dormantEyeRotation"
+          type="range"
+          min="0"
+          max="360"
+          step="1"
+        >
+      </div>
+
+       </div>
+
+  </div>
+
+
+  <div class="settings-card">
+
+    <h2>Praxi position</h2>
+
+    <p class="settings-muted">
+      The default is the bottom-left corner. These controls
+      move both the dormant eyes and active Praxi. Dormant eye
+      rotation affects both open and blink eye artwork only,
+      never the full Praxi character.
+    </p>
+
+    <div class="settings-grid">
+
+      <div>
+        <label>
+          Left ↔ Right
+          <span
+            id="settings-horizontalValue"
+            class="settings-range-value"
+          ></span>
+        </label>
+
+        <input
+          id="settings-horizontalPosition"
+          type="range"
+          min="0"
+          max="100"
+          step="1"
+        >
+      </div>
+
+      <div>
+        <label>
+          Up ↔ Down
+          <span
+            id="settings-verticalValue"
+            class="settings-range-value"
+          ></span>
+        </label>
+
+        <input
+          id="settings-verticalPosition"
+          type="range"
+          min="0"
+          max="100"
+          step="1"
+        >
+      </div>
+
+    </div>
+
+    <div class="settings-tip">
+      0% horizontal = left edge · 100% = right edge.
+      0% vertical = top · 100% = bottom.
+    </div>
+
+   <div class="actions settings-corner-actions">
+  <button
+    class="secondary"
+    type="button"
+    data-horizontal="0"
+    data-vertical="100"
+  >
+    Bottom-left
+  </button>
+
+  <button
+    class="secondary"
+    type="button"
+    data-horizontal="100"
+    data-vertical="100"
+  >
+    Bottom-right
+  </button>
+
+  <button
+    class="secondary"
+    type="button"
+    data-horizontal="0"
+    data-vertical="0"
+  >
+    Top-left
+  </button>
+
+  <button
+    class="secondary"
+    type="button"
+    data-horizontal="100"
+    data-vertical="0"
+  >
+    Top-right
+  </button>
+</div>
+
+  </div>
+
+
+  <div class="settings-card">
+
+    <h2>Reminder schedule</h2>
+
+    <p class="settings-muted">
+      Choose how often Praxi nudges you and which kinds of
+      notifications appear on your phone.
+    </p>
+
+    <div class="settings-grid">
+
+      <div>
+        <label>
+          Break reminder (minutes)
+        </label>
+
+        <input
+          id="settings-breakIntervalMinutes"
+          type="number"
+          min="1"
+          step="1"
+          placeholder="20"
+        >
+      </div>
+
+      <div>
+        <label>
+          Work check-in every (hours)
+        </label>
+
+        <input
+          id="settings-workIntervalHours"
+          type="number"
+          min="1"
+          max="12"
+          step="1"
+          placeholder="2"
+        >
+      </div>
+
+      <div>
+        <label>
+          Rhapsody starts at
+        </label>
+
+        <input
+          id="settings-rhapsodyStartTime"
+          type="time"
+        >
+      </div>
+
+      <div>
+        <label>
+          Rhapsody reminder every (hours)
+        </label>
+
+        <input
+          id="settings-rhapsodyIntervalHours"
+          type="number"
+          min="1"
+          max="12"
+          step="1"
+          placeholder="1"
+        >
+      </div>
+
+    </div>
+
+    <h3 class="settings-subheading">
+      Which notifications to show
+    </h3>
+
+    <div class="settings-toggles">
+
+      <label class="settings-toggle">
+        <input
+          id="settings-breaksEnabled"
+          type="checkbox"
+        >
+        ☕ Break reminders
+      </label>
+
+      <label class="settings-toggle">
+        <input
+          id="settings-rhapsodyEnabled"
+          type="checkbox"
+        >
+        📖 Rhapsody reminders
+      </label>
+
+      <label class="settings-toggle">
+        <input
+          id="settings-greetingsEnabled"
+          type="checkbox"
+        >
+        👋 Greetings
+      </label>
+
+      <label class="settings-toggle">
+        <input
+          id="settings-workEnabled"
+          type="checkbox"
+        >
+        💼 Work check-ins
+      </label>
+
+    </div>
+
+    <div class="settings-actions">
+
+      <button
+        id="settings-testNotification"
+        class="settings-secondary"
+        type="button"
+      >
+        Send a test notification
+      </button>
+
+    </div>
+
+    <p
+      class="settings-tip"
+      id="settings-notif-status"
+    ></p>
+
+  </div>
+
+
+  <div class="settings-card">
+
+    <h2>Quiet hours</h2>
+
+    <label class="settings-toggle">
+      <input
+        id="settings-quietEnabled"
+        type="checkbox"
+      >
+      Enable quiet hours
+    </label>
+
+    <div class="settings-grid">
+
+      <div>
+        <label>Start</label>
+
+        <input
+          id="settings-quietStart"
+          type="time"
+        >
+      </div>
+
+      <div>
+        <label>End</label>
+
+        <input
+          id="settings-quietEnd"
+          type="time"
+        >
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="settings-card">
+
+    <h2>Widget</h2>
+
+    <p class="settings-muted">
+      Allow a home-screen widget that shows Praxi and the message
+      for the current time of day. The widget follows the same
+      reminder cadence as Praxi's notifications — it changes as the
+      day moves from morning to afternoon, evening, and night.
+    </p>
+
+    <label class="settings-toggle">
+      <input
+        id="settings-widgetEnabled"
+        type="checkbox"
+      >
+      Allow home-screen widget
+    </label>
+
+    <div
+      class="widget-preview"
+      id="widgetPreview"
+    >
+
+      <img
+        class="widget-preview-pet"
+        id="widget-preview-icon"
+        src="assets/praxi-closeup.png"
+        alt="Praxi"
+      >
+
+      <div class="widget-preview-body">
+
+        <div class="widget-preview-label">
+          PRAXI
+          <span id="widget-preview-period">
+            Now
+          </span>
+        </div>
+
+        <div
+          class="widget-preview-message"
+          id="widget-preview-message"
+        >
+          …
+        </div>
+
+        <div
+          class="widget-preview-actions"
+          id="widget-preview-actions"
+        ></div>
+
+      </div>
+
+    </div>
+
+    <p class="settings-tip">
+      Widescreen preview. On your home screen this appears as a
+      rounded widget with Praxi's icon and the current message.
+    </p>
+
+    <div class="settings-actions">
+
+      <button
+        id="widget-preview-shuffle"
+        class="settings-secondary"
+        type="button"
+      >
+        🔀 Shuffle preview
+      </button>
+
+    </div>
+
+    <button
+      type="button"
+      id="add-widget-button"
+      class="add-widget-button"
+    >
+      ＋ Add widget to home screen
+    </button>
+
+    <p
+      class="add-widget-status"
+      id="add-widget-status"
+      hidden
+    ></p>
+
+  </div>
+
+
+  <div class="settings-card">
+
+    <h2>Message library</h2>
+
+    <p class="settings-muted">
+      Edit the JSON below to customize Praxi's reminder
+      and Rhapsody wording.
+    </p>
+
+    <textarea
+      id="settings-messagesEditor"
+    ></textarea>
+
+  </div>
+
+
+<div class="settings-card">
+
+  <h2>Pause & recovery</h2>
+
+  <div class="settings-actions">
+
+    <button
+      id="pause-30-button"
+      type="button"
+    >
+      Pause 30 min
+    </button>
+
+    <button
+      id="pause-60-button"
+      type="button"
+    >
+      Pause 1 hour
+    </button>
+
+    <button
+      id="pause-tomorrow-button"
+      type="button"
+    >
+      Pause until tomorrow
+    </button>
+
+    <button
+      id="bring-back-button"
+      class="settings-secondary"
+      type="button"
+    >
+      Bring Praxi back to saved position
+    </button>
+
+  </div>
+
+  <p id="settings-status"></p>
+
+</div>
+
+<div class="settings-actions settings-save-area">
+  <button
+    id="settings-save-button"
+    type="button"
+  >
+    Save Settings
+  </button>
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+
+ <script src="js/store.js"></script>
+<script src="js/bridge.js"></script>
+<script src="daily-goals.js"></script>
+<script src="home.js"></script>
+<script src="js/mobile.js"></script>
+
+</body>
+</html>
+

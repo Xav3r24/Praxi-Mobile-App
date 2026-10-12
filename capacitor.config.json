@@ -1,0 +1,23 @@
+{
+  "appId": "com.praxi.mobile",
+  "appName": "Praxi",
+  "webDir": "www",
+  "server": {
+    "allowNavigation": [
+      "read.rhapsodyofrealities.org",
+      "rhapsodyofrealities.org",
+      "*.rhapsodyofrealities.org",
+      "*.b-cdn.net",
+      "*.qubads.me",
+      "*.onesignal.com",
+      "*.facebook.net",
+      "*.googleapis.com",
+      "*.gstatic.com",
+      "*.jsdelivr.net",
+      "*.bootstrapcdn.com",
+      "www.pastorchrislive.org",
+      "pastorchrislive.org",
+      "*.pastorchrislive.org"
+    ]
+  }
+}

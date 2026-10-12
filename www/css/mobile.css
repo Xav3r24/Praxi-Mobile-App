@@ -1,0 +1,1320 @@
+/* =========================================================
+   PRAXI MOBILE LAYER
+   ---------------------------------------------------------
+   Adapts the real desktop dashboard (home.css) to phones.
+   Loaded AFTER home.css, so rules here win at equal
+   specificity. Everything is scoped to <=760px except the
+   GIF-loop fix and the mobile-only chrome, which is hidden
+   on larger screens.
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   1. GIF ICONS SHOULD LOOP (no hover on touch devices)
+   Desktop shows a static emoji and swaps to an animated GIF
+   on :hover. Touch has no hover, so we always show the GIF.
+   --------------------------------------------------------- */
+
+.stat-icon-swap .stat-icon-static {
+  opacity: 0 !important;
+  transform: scale(0.85) !important;
+}
+
+.stat-icon-swap .stat-icon-animated {
+  opacity: 1 !important;
+  transform: scale(1) !important;
+}
+
+/* Mobile-only chrome: hidden by default (tablet/desktop). */
+.mobile-app-bar,
+.mobile-overlay {
+  display: none;
+}
+
+/* ---------------------------------------------------------
+   1b. NAV ICONS (real desktop assets, not emoji)
+   Static PNGs from the desktop app; the ones the desktop
+   animated stay as looping GIFs.
+   --------------------------------------------------------- */
+
+.nav-item .nav-icon {
+  width: 22px;
+  height: 22px;
+
+  flex-shrink: 0;
+
+  display: block;
+  object-fit: contain;
+
+  border-radius: 6px;
+}
+
+.nav-item .nav-icon-wide {
+  width: 26px;
+  height: 22px;
+}
+
+/* ---------------------------------------------------------
+   2. PHONE LAYOUT
+   --------------------------------------------------------- */
+
+@media (max-width: 760px) {
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  /* ---- Fixed top app bar ---- */
+
+  .mobile-app-bar {
+    display: flex;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: calc(52px + env(safe-area-inset-top));
+    padding: env(safe-area-inset-top) 12px 0;
+
+    align-items: center;
+    gap: 11px;
+
+    background: var(--sidebar-bg, rgba(13, 15, 18, 0.94));
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+
+    border-bottom: 1px solid var(--border);
+
+    z-index: 600;
+  }
+
+  .mobile-menu-button {
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    background: var(--surface);
+    color: var(--text-primary);
+
+    font-size: 19px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mobile-menu-button:active {
+    transform: scale(0.95);
+  }
+
+  .mobile-app-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    font-size: 16px;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+
+    color: var(--text-primary);
+  }
+
+  .mobile-app-title img {
+    height: 26px;
+    width: auto;
+
+    display: block;
+  }
+
+  /* ---- Sidebar becomes an off-canvas drawer ---- */
+
+  .sidebar {
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    width: min(84vw, 310px);
+
+    padding:
+      calc(20px + env(safe-area-inset-top))
+      14px
+      calc(20px + env(safe-area-inset-bottom));
+
+    overflow-y: auto;
+
+    transform: translateX(-102%);
+    transition: transform 260ms cubic-bezier(0.22, 0.8, 0.24, 1);
+
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+
+    z-index: 700;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  /* Undo the desktop <=700 icon-rail collapse: restore labels */
+  .sidebar .brand {
+    justify-content: flex-start;
+    padding-bottom: 22px;
+  }
+
+  .sidebar .brand-name,
+  .sidebar .nav-item span:last-child {
+    display: block;
+  }
+
+  .sidebar .nav-item {
+    justify-content: flex-start;
+    flex-direction: row;
+
+    gap: 12px;
+
+    padding: 13px 12px;
+
+    font-size: 14px;
+  }
+
+  .sidebar .nav-item span:first-child {
+    width: 24px;
+    font-size: 17px;
+  }
+
+  .sidebar .nav-item .nav-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .sidebar .nav-item .nav-icon-wide {
+    width: 28px;
+    height: 24px;
+  }
+
+  .sidebar .nav-item span:last-child {
+    font-size: 14px;
+  }
+
+  /* ---- Backdrop ---- */
+
+  .mobile-overlay {
+    display: block;
+
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.5);
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity 220ms ease;
+
+    z-index: 650;
+  }
+
+  .mobile-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* ---- Main content: full width, clears the app bar ---- */
+
+  .main-content {
+    width: 100%;
+    max-width: 100%;
+
+    margin-left: 0;
+
+    padding:
+      calc(52px + env(safe-area-inset-top) + 18px)
+      16px
+      calc(30px + env(safe-area-inset-bottom));
+  }
+
+  /* Dedicated pages carry their own desktop padding; drop it
+     so spacing is controlled in one place (main-content). */
+  #page-daily-goals,
+  #page-settings {
+    padding: 0 !important;
+    overflow-y: visible;
+  }
+
+  #page-new-note .new-note-page {
+    padding: 0 !important;
+    min-height: 0;
+  }
+
+  /* ---- Grids: tidy single/double columns, no clashing ---- */
+
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .prayer-stats-grid,
+  .rhapsody-dashboard-grid,
+  .confession-category-grid,
+  .notes-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ---- Rhythm / spacing ---- */
+
+  .section {
+    margin-bottom: 24px;
+  }
+
+  .section-heading {
+    margin-bottom: 16px;
+  }
+
+  .topbar {
+    margin-bottom: 20px;
+  }
+
+  .topbar h1 {
+    font-size: 23px;
+  }
+
+  .stats-grid {
+    margin-bottom: 24px;
+  }
+
+  /* Long words / wide content must never cause sideways scroll */
+  .main-content,
+  .panel,
+  .stat-card,
+  .settings-card,
+  .prayer-live-card,
+  .rhapsody-hero,
+  .confession-reader {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .rhapsody-week {
+    gap: 4px;
+  }
+
+  /* The back button that returns from Rhapsody/Pray-A-Thon reading
+     must sit above the mobile app bar, otherwise it is hidden. */
+  .rhapsody-reader-back {
+    top: calc(env(safe-area-inset-top) + 6px);
+    left: auto;
+    right: 12px;
+    z-index: 800;
+  }
+}
+
+/* ---------------------------------------------------------
+   4. WIDGET SECTION + NOTIFICATIONS SCHEDULE
+   --------------------------------------------------------- */
+
+/* Widescreen widget preview thumbnail */
+.widget-preview {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  width: 100%;
+  aspect-ratio: 2.7 / 1;
+  max-height: 130px;
+
+  margin: 14px 0 10px;
+  padding: 14px 18px;
+
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-large);
+
+  background:
+    radial-gradient(circle at 85% 15%, rgba(82, 115, 232, 0.22), transparent 55%),
+    linear-gradient(135deg, var(--surface), var(--surface-soft));
+
+  box-shadow: 0 14px 34px var(--card-shadow);
+
+  overflow: hidden;
+}
+
+.widget-preview-pet {
+  height: 100%;
+  width: auto;
+  max-width: 96px;
+
+  flex-shrink: 0;
+
+  object-fit: contain;
+
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35));
+}
+
+.widget-preview-body {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.widget-preview-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+
+  color: var(--accent);
+}
+
+.widget-preview-label span {
+  padding: 2px 8px;
+  border-radius: 999px;
+
+  background: var(--accent-soft);
+  color: var(--accent);
+
+  font-size: 9px;
+  letter-spacing: 0.06em;
+}
+
+.widget-preview-message {
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.3;
+
+  color: var(--text-primary);
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Notifications page */
+.notif-current-message {
+  margin: 4px 0 0;
+
+  font-size: 16px;
+  line-height: 1.5;
+
+  color: var(--text-primary);
+}
+
+.notif-schedule {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+
+  margin-top: 18px;
+}
+
+.notif-slot {
+  position: relative;
+
+  padding: 14px 16px;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-medium);
+
+  background: var(--surface);
+
+  transition:
+    border-color 200ms ease,
+    background 200ms ease;
+}
+
+.notif-slot-now {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.notif-slot-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-bottom: 6px;
+}
+
+.notif-slot-icon {
+  font-size: 15px;
+}
+
+.notif-slot-head strong {
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.notif-slot-range {
+  margin-left: auto;
+
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.notif-badge {
+  padding: 2px 8px;
+  border-radius: 999px;
+
+  background: var(--accent);
+  color: #fff;
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.notif-slot p {
+  margin: 0;
+
+  font-size: 13.5px;
+  line-height: 1.45;
+
+  color: var(--text-secondary);
+}
+
+.notif-slot-count {
+  display: block;
+
+  margin-top: 8px;
+
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+
+  color: var(--text-muted);
+}
+
+/* ---------------------------------------------------------
+   5. VERY SMALL PHONES
+   --------------------------------------------------------- */
+
+@media (max-width: 380px) {
+
+  .main-content {
+    padding-left: 13px;
+    padding-right: 13px;
+  }
+
+  .stats-grid {
+    gap: 9px;
+  }
+
+  .topbar h1 {
+    font-size: 21px;
+  }
+}
+
+/* ---------------------------------------------------------
+   6. IN-APP READER (Rhapsody / Pray-A-Thon)
+   --------------------------------------------------------- */
+
+.praxi-reader {
+  position: fixed;
+  inset: 0;
+
+  z-index: 900;
+
+  display: none;
+  flex-direction: column;
+
+  background: #0b0d12;
+}
+
+.praxi-reader.open {
+  display: flex;
+}
+
+.praxi-reader-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: calc(env(safe-area-inset-top) + 8px) 14px 8px;
+
+  background: #11141b;
+  color: #fff;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Easy-to-reach Back control, top-left of the reader. */
+.praxi-reader-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  min-height: 42px;
+  padding: 0 16px 0 12px;
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.07);
+  color: #fff;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.praxi-reader-back span[aria-hidden] {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.praxi-reader-title {
+  margin-left: auto;
+  padding-right: 4px;
+
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+
+  color: rgba(255, 255, 255, 0.72);
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.praxi-reader-stage {
+  position: relative;
+  flex: 1;
+
+  background: #ffffff;
+}
+
+.praxi-reader-frame {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+
+  background: #ffffff;
+}
+
+.praxi-reader-status {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #0b0d12;
+  color: #94a3b8;
+
+  font-size: 14px;
+}
+
+.praxi-reader-status.hidden {
+  display: none;
+}
+
+/* The reader has its own Back control, so hide the small floating
+   ones while it is open. */
+body.reader-open .rhapsody-reader-back {
+  display: none !important;
+}
+
+body.reader-open {
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------
+   7. WIDGET PREVIEW — ICON, ACTION BUTTONS, VARIED STYLES
+   --------------------------------------------------------- */
+
+/* Let the card grow a little so the icon + button fit nicely. */
+.widget-preview {
+  aspect-ratio: auto;
+  min-height: 140px;
+  max-height: none;
+
+  padding: 16px 18px;
+}
+
+.widget-preview-pet {
+  height: 88px;
+  max-height: 88px;
+}
+
+/* Actions row only appears for messages that carry one. */
+.widget-preview-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  margin-top: 10px;
+}
+
+.widget-preview-actions:empty {
+  display: none;
+}
+
+.widget-preview-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 7px 13px;
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--text-primary, #ffffff);
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+
+  cursor: pointer;
+
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.widget-preview-action:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.widget-preview-action:active {
+  transform: scale(0.97);
+}
+
+/* ---------------------------------------------------------
+   8. QUICK NOTE — TAG CHIPS + PICKER (tightened)
+   --------------------------------------------------------- */
+
+.new-note-tags {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  margin: 14px 0 10px;
+}
+
+.new-note-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.new-note-tags-list:empty {
+  display: none;
+}
+
+.new-note-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 6px 6px 6px 13px;
+
+  border: 1px solid rgba(120, 150, 235, 0.4);
+  border-radius: 999px;
+
+  background: rgba(82, 115, 232, 0.16);
+  color: var(--text-primary, #ffffff);
+
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.new-note-tag-text {
+  white-space: nowrap;
+}
+
+.new-note-tag-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 18px;
+  height: 18px;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.14);
+  color: inherit;
+
+  font-size: 13px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition: background 0.15s ease;
+}
+
+.new-note-tag-remove:hover {
+  background: rgba(255, 96, 96, 0.45);
+}
+
+.new-note-tag-input {
+  width: 100%;
+
+  padding: 11px 14px;
+
+  border: 1px solid var(--border-strong, rgba(255, 255, 255, 0.12));
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-primary, #ffffff);
+
+  font-family: inherit;
+  font-size: 14px;
+
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.new-note-tag-input::placeholder {
+  color: var(--text-muted, rgba(255, 255, 255, 0.4));
+}
+
+/* ---------------------------------------------------------
+   9. CUSTOM CONFESSIONS
+   --------------------------------------------------------- */
+
+.confession-category-card-custom {
+  border-color: rgba(120, 150, 235, 0.35);
+}
+
+.custom-confession-composer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  margin-bottom: 22px;
+  padding: 18px;
+
+  border: 1px solid var(--border-strong, rgba(255, 255, 255, 0.12));
+  border-radius: 18px;
+
+  background:
+    linear-gradient(135deg, rgba(82, 115, 232, 0.12), rgba(255, 255, 255, 0.02));
+}
+
+.custom-confession-composer-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.custom-confession-composer-head strong {
+  display: block;
+
+  font-size: 15px;
+  color: var(--text-primary, #ffffff);
+}
+
+.custom-confession-composer-head div > span {
+  display: block;
+  margin-top: 2px;
+
+  font-size: 12.5px;
+  color: var(--text-secondary, #9da3ae);
+}
+
+.custom-confession-composer-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 38px;
+  height: 38px;
+
+  border-radius: 12px;
+
+  background: rgba(82, 115, 232, 0.2);
+  font-size: 18px;
+}
+
+.custom-confession-title-input,
+.custom-confession-text-input {
+  width: 100%;
+
+  padding: 12px 14px;
+
+  border: 1px solid var(--border-strong, rgba(255, 255, 255, 0.12));
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-primary, #ffffff);
+
+  font-family: inherit;
+  font-size: 14.5px;
+  line-height: 1.6;
+
+  resize: vertical;
+}
+
+.custom-confession-title-input:focus,
+.custom-confession-text-input:focus {
+  outline: none;
+
+  border-color: rgba(120, 150, 235, 0.6);
+  box-shadow: 0 0 0 3px rgba(82, 115, 232, 0.18);
+}
+
+.custom-confession-composer-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.custom-confession-add {
+  padding: 11px 20px;
+
+  border: none;
+  border-radius: 999px;
+
+  background: var(--accent, #5273e8);
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: transform 0.1s ease, filter 0.15s ease;
+}
+
+.custom-confession-add:hover {
+  filter: brightness(1.08);
+}
+
+.custom-confession-add:active {
+  transform: scale(0.98);
+}
+
+.custom-confession-row {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.custom-confession-row .confession-list-item {
+  flex: 1;
+  min-width: 0;
+}
+
+.custom-confession-delete {
+  flex: 0 0 auto;
+  align-self: center;
+
+  width: 40px;
+  height: 40px;
+
+  border: 1px solid rgba(255, 96, 96, 0.28);
+  border-radius: 12px;
+
+  background: rgba(255, 96, 96, 0.1);
+  color: #ff8f8f;
+
+  font-size: 20px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition: background 0.15s ease;
+}
+
+.custom-confession-delete:hover {
+  background: rgba(255, 96, 96, 0.22);
+}
+
+/* ---------------------------------------------------------
+   10. SCROLLBARS — match the app instead of the OS default
+   --------------------------------------------------------- */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(120, 145, 220, 0.55) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+
+  background-color: rgba(120, 145, 220, 0.55);
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(140, 165, 240, 0.8);
+  background-clip: padding-box;
+}
+
+/* ---------------------------------------------------------
+   11. RHAPSODY DEVOTIONAL (native in-app reader)
+   --------------------------------------------------------- */
+
+.praxi-reader-external {
+  margin-left: 10px;
+  padding: 8px 12px;
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.07);
+  color: #cfe0ff;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.praxi-reader.is-devo .praxi-reader-stage {
+  background: #0b0d12;
+}
+
+.praxi-devo {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #0b0d12;
+  color: #e9edf5;
+}
+
+.praxi-devo[hidden] {
+  display: none;
+}
+
+.praxi-devo-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 14px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: #11141b;
+}
+
+.praxi-devo-lang {
+  max-width: 55%;
+
+  padding: 8px 10px;
+
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.06);
+  color: #e9edf5;
+
+  font-family: inherit;
+  font-size: 13px;
+}
+
+.praxi-devo-lang option {
+  background: #171a20;
+  color: #ffffff;
+}
+
+.praxi-devo-readat {
+  margin-left: auto;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  color: #7fd6a2;
+  white-space: nowrap;
+}
+
+.praxi-devo-scroll {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  padding: 18px 16px calc(40px + env(safe-area-inset-bottom));
+}
+
+.praxi-devo-article {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.praxi-devo-date {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  color: #8fb0ff;
+}
+
+.praxi-devo-article h1 {
+  margin: 8px 0 16px;
+
+  font-size: 25px;
+  line-height: 1.25;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.praxi-devo-scripture {
+  margin: 0 0 18px;
+
+  padding: 12px 14px;
+
+  border-left: 3px solid #4a6cf7;
+  border-radius: 8px;
+
+  background: rgba(74, 108, 247, 0.1);
+  color: #d7def0;
+
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.praxi-devo-section {
+  margin: 0 0 22px;
+}
+
+.praxi-devo-section h2 {
+  margin: 0 0 8px;
+
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+
+  color: #8fb0ff;
+}
+
+.praxi-devo-rich {
+  font-size: 16.5px;
+  line-height: 1.75;
+  color: #dfe5f0;
+}
+
+.praxi-devo-rich p {
+  margin: 0 0 14px;
+}
+
+.praxi-devo-rich a {
+  color: #8fb0ff;
+  text-decoration: underline;
+}
+
+.praxi-devo-loading,
+.praxi-devo-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+
+  min-height: 60vh;
+  padding: 24px;
+
+  text-align: center;
+  color: #94a3b8;
+}
+
+.praxi-devo-open {
+  align-self: flex-start;
+
+  margin-top: 6px;
+  padding: 11px 18px;
+
+  border: 1px solid rgba(120, 150, 235, 0.5);
+  border-radius: 999px;
+
+  background: rgba(82, 115, 232, 0.18);
+  color: #dfe7ff;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------------------------------------------------------
+   12. QUICK NOTE — NEW NOTE PAGE FITS THE PHONE
+   --------------------------------------------------------- */
+
+#page-new-note .new-note-header {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+#page-new-note .new-note-actions {
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+#page-new-note .new-note-save-status {
+  font-size: 12px;
+  order: 3;
+  flex: 1 1 100%;
+}
+
+#page-new-note .new-note-theme-select {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 55%;
+  height: 38px;
+}
+
+#page-new-note .quick-notes-new-button {
+  flex: 0 0 auto;
+}
+
+#page-new-note .new-note-editor {
+  width: 100%;
+}
+
+#page-new-note .new-note-title {
+  font-size: 25px;
+  padding: 4px 0 14px;
+}
+
+#page-new-note .new-note-toolbar {
+  flex-wrap: wrap;
+  gap: 2px;
+  margin-bottom: 16px;
+}
+
+#page-new-note .new-note-toolbar button {
+  min-width: 34px;
+  height: 34px;
+  padding: 0 8px;
+}
+
+#page-new-note .new-note-body {
+  min-height: 0;
+  padding-bottom: 140px;
+  font-size: 16px;
+}
+
+#page-new-note .new-note-tags {
+  margin: 12px 0 10px;
+}
+
+.new-note-tag-input-row {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.new-note-tag-input-row .new-note-tag-input {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.new-note-tag-add {
+  flex: 0 0 auto;
+
+  width: 46px;
+
+  border: 1px solid rgba(120, 150, 235, 0.45);
+  border-radius: 12px;
+
+  background: rgba(82, 115, 232, 0.2);
+  color: #dfe7ff;
+
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.new-note-tag-add:active {
+  background: rgba(82, 115, 232, 0.35);
+}
+
+/* ---------------------------------------------------------
+   13. WIDGET — "add to home screen" action
+   --------------------------------------------------------- */
+
+.add-widget-button {
+  margin-top: 14px;
+  padding: 12px 18px;
+
+  border: 1px solid rgba(120, 150, 235, 0.5);
+  border-radius: 12px;
+
+  background: rgba(82, 115, 232, 0.18);
+  color: #dfe7ff;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.add-widget-button:active {
+  background: rgba(82, 115, 232, 0.32);
+}
+
+.add-widget-status {
+  margin-top: 10px;
+
+  color: #9da3ae;
+  font-size: 13px;
+  line-height: 1.5;
+}

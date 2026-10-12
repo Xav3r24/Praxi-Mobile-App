@@ -1,0 +1,19 @@
+{
+  "name": "praxi-desktop-pet",
+  "version": "0.3.0",
+  "description": "Praxi, a friendly animated desktop companion for breaks and Rhapsody of Realities reminders.",
+  "main": "main.js",
+  "author": "Xavier",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.5.3",
+    "electron": "^38.0.0"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/core": "^8.5.3"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "enabled": true,
+  "alwaysOnTop": true,
+  "soundEnabled": true,
+  "theme": "dark",
+  "animationSpeed": 1,
+  "petSize": 1,
+  "horizontalPosition": 0,
+  "verticalPosition": 100,
+  "breakIntervalMinutes": 20,
+  "rhapsodyStartTime": "07:00",
+  "rhapsodyIntervalHours": 1,
+  "reminders": {
+    "breaks": {
+      "enabled": true
+    },
+    "rhapsody": {
+      "enabled": true
+    },
+    "greetings": {
+      "enabled": false
+    },
+    "work": {
+      "enabled": false
+    }
+  },
+  "quietHours": {
+    "enabled": false,
+    "start": "22:00",
+    "end": "07:00"
+  },
+  "pauseUntil": 0,
+  "summonButtonPosition": null,
+  "messageLibrary": {},
+  "dormantEyeSize": 90,
+  "dormantEyeRotation": 0
+}

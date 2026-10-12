@@ -1,0 +1,164 @@
+{
+  "greetings": [
+    "Hi Xavier, how are you doing?",
+    "Just checking in on you. ☁️",
+    "Hey Xavier. What are we getting into today?"
+  ],
+
+  "timeMessages": {
+    "morning": [
+      "Good morning, Xavier. Praxi is online. ☀️",
+      "Morning. What's the plan for today?",
+      "New day, fresh start. Let's do something worthwhile.",
+      "Hope you slept well. Today is a good day to make progress."
+    ],
+
+    "afternoon": [
+      "Hey Xavier, how's the day treating you?",
+      "Still at it. That's what diligence looks like.",
+      "Afternoon check-in. How are things going?",
+      "Don't forget to breathe between all that work. 😌",
+      "What's the one thing that would make today count?"
+    ],
+
+    "evening": [
+      "Evening, Xavier. How did today go?",
+      "You made it through another day. That's worth being grateful for. 😌",
+      "Still working, or starting to wind down?",
+      "Evening check-in. How are you doing?",
+      "Whatever didn't get finished can wait. It's not going anywhere bad."
+    ],
+
+    "night": [
+      "Still around? 🌙 Just so you know, I'm on the quiet end of the day.",
+      "Night mode activated. 🌙",
+      "Anything you want to wrap up before calling it a day?",
+      "Give your brain permission to rest.",
+      "It's getting late, Xavier. Take care of yourself. 💙"
+    ],
+
+    "lateNight": [
+      "Xavier... it's getting late. 😴",
+      "One last thing, then we rest. Deal?",
+      "\"Come unto me, all ye that labour and are heavy laden, and I will give you rest.\" Matthew 11:28. Rest isn't a reward, it's wisdom. 🌙",
+      "Tomorrow needs you rested. Close something tonight.",
+      "You've been at this for a while. It's time to call it a night."
+    ]
+  },
+
+  "breaks": [
+    "Hey Xavier, time for a break?",
+    "Need a quick stretch?",
+    "Take five. You're doing well.",
+    "Step away from the desk for a moment. Come back sharper."
+  ],
+
+  "work": [
+    "Still working hard? Keep going. 💙",
+    "How's it going, Xavier?",
+    "\"whatever you do, do it heartily, as to the Lord.\" Colossians 3:23. Whatever this is, it counts. 📖",
+    "Keep going. Don't grow weary in doing well — the harvest comes in its own time. Galatians 6:9."
+  ],
+
+  "rhapsody": [
+    "Good morning Xavier! Have you read today's Rhapsody of Realities? 📖",
+    "Hey Xavier, have you had your time with the Word today? ☁️📖",
+    "Today's gentle reminder: have you read your Rhapsody yet?"
+  ],
+
+  "rhapsodyNotYet": [
+    "Not yet? No worries. A few minutes with today's message will set the tone for the whole day. 📖",
+    "Still a good window today. Go and have a read — then come back and tell me what stood out.",
+    "I'll let you off this time 😌. Today's Rhapsody is still open, and I'd love to hear what it says.",
+    "Just a few minutes with the Word, Xavier. It's worth the detour. ❤️",
+    "\"thou shalt meditate therein day and night... then thou shalt make thy way prosperous.\" Joshua 1:8. That's the promise behind today's reading. 📖"
+  ],
+
+  "rhapsodyYesPrompt": [
+    "Nice! 😊 What was today's article title?",
+    "What was today's one called?"
+  ],
+
+  "rhapsodyCompleted": [
+    "Nice one, Xavier. 📖 That's time with the Word well spent. Now let it shape the day.",
+    "Excellent. The point isn't just reading it — it's living it. Go carry today's message with you. ☁️",
+    "Beautiful. Hold on to the line that stood out and let it work in you.",
+    "That's the kind of consistency that changes a person. Same time tomorrow? ✨"
+  ],
+
+  "dailyGoals": {
+    "firstReminder": [
+      "Just a gentle check-in on today's goals. No rush — which one matters most right now? 🎯",
+      "Checking in. If something on today's list still matters, it still has today left in it."
+    ],
+    "secondReminder": [
+      "One more quiet check-in. Start the smallest one now and the rest get easier.",
+      "Last nudge from me on this one today — the first step is usually the only hard part. 💙"
+    ],
+    "goalCompleted": [
+      "{goal} — done. Progress you can point at. 👏",
+      "That's one down. You said you'd do it and you did. 🎯",
+      "Good work. Small finishes are how big days get built."
+    ],
+    "allCompleted": [
+      "You cleared everything today. 🎉 That's how you end a day well. Take the win seriously.",
+      "Every goal done, Xavier. That's a beautiful finish. Rest on it tonight. ✨"
+    ],
+    "partialProgress": [
+      "{done} of {total} goals completed. What matters most is still within reach. 🎯",
+      "{done} down today. Keep going — momentum is on your side."
+    ],
+    "missedGoal": [
+      "It didn't all get done today, and that's information, not failure. Today is a new day — let's focus on what matters most. 💙",
+      "No guilt here. Pick the easiest one and get a small win to start the day with.",
+      "Yesterday stays yesterday. What would make today feel worthwhile?"
+    ],
+    "newDay": [
+      "Today is a new day. The slate is clean — what matters most today?",
+      "New day, fresh start. Let's set something worth finishing. 🎯"
+    ],
+    "noGoals": [
+     "Good morning. Before the day fills up, let's give it direction. ✨",
+	 "No goals for today yet. Want to name one thing you'd like to finish?",
+      "An empty list is just potential. Give me one thing and I'll keep it with you."
+    ]
+  },
+
+  "offlineReplies": [
+    {
+      "match": ["hi", "hello", "hey"],
+      "reply": "Hi Xavier! How can I help? ☁️"
+    },
+    {
+      "match": ["how are you", "how're you"],
+      "reply": "Doing well, Xavier. How's your side of the screen?"
+    },
+    {
+      "match": ["tired", "sleepy", "exhausted"],
+      "reply": "Take a little breather, Xavier. You've been carrying a lot. 💙"
+    },
+    {
+      "match": ["water", "thirsty", "drink"],
+      "reply": "Go drink some water. Stay hydrated. 💧"
+    },
+    {
+      "match": ["stressed", "stress", "overwhelmed"],
+      "reply": "Breathe, Xavier. Put it down for a minute, take it to God with thanksgiving, and let the peace do its work. Philippians 4:6–7. Then work the part that's yours."
+    },
+    {
+      "match": ["worried", "worry", "anxious", "anxiety"],
+      "reply": "Name the actual thing — it's usually smaller than the feeling. Take it to God plainly, then do the part that's yours. One step. 🕊️"
+    },
+    {
+      "match": ["sad", "down", "discouraged", "low"],
+      "reply": "I'm sorry, Xavier. You don't have to perform for me. Talk to me about it, or let me just keep you company for a while. 💙"
+    }
+  ],
+
+  "fallbackReplies": [
+    "I'm listening, Xavier. Tell me a little more. ☁️",
+    "Got you. What are you working on?",
+    "I'm right here. One step at a time.",
+    "Say more about that. What's the hardest part of it?"
+  ]
+}
