@@ -15,7 +15,8 @@
     moments: 'praxi.momentLedger',
     rhapsody: 'praxi.rhapsody',
     customConfessions: 'praxi.customConfessions',
-    arcade: 'praxi.arcade'
+    arcade: 'praxi.arcade',
+    quickNotes: 'praxiQuickNotes'
   };
 
   // Fallback defaults (mirror of desktop config/settings.json).
@@ -180,34 +181,64 @@
       time: entry ? entry.time : null,
       readAt: entry ? (entry.readAt || null) : null,
       date: entry ? entry.date : null,
+      reflection: entry ? (entry.reflection || '') : '',
       streak: computeStreak(r.history),
       history: r.history.slice()
     };
   }
 
-  function markRhapsodyRead(topic) {
+  // `reflection` is the optional "what stood out to you" note the user
+  // writes after reading. Additive: old history entries without it are
+  // untouched and simply report an empty string.
+  function markRhapsodyRead(topic, reflection) {
     const r = getRhapsody();
     const today = todayStr();
     const time = nowTime();
     const readAt = new Date().toISOString();
+    const reflectionText = (reflection == null ? '' : String(reflection)).trim();
     const existing = r.history.find((h) => h.date === today);
+    let finalTopic = topic || '';
     if (existing) {
       existing.topic = topic || existing.topic;
       existing.time = time;
       existing.readAt = readAt;
+      existing.reflection = reflectionText;
+      finalTopic = existing.topic;
     } else {
-      r.history.unshift({ date: today, topic: topic || '', time, readAt });
+      finalTopic = topic || '';
+      r.history.unshift({
+        date: today,
+        topic: finalTopic,
+        time,
+        readAt,
+        reflection: reflectionText
+      });
     }
     writeJSON(KEYS.rhapsody, r);
     return {
       read: true,
-      topic: topic || '',
+      topic: finalTopic,
       time,
       readAt,
       date: today,
+      reflection: reflectionText,
       streak: computeStreak(r.history),
       history: r.history.slice()
     };
+  }
+
+  // ---- Quick Notes (same localStorage key the desktop app already
+  // uses, so existing notes survive untouched; this store is now the
+  // single writer) ----
+
+  function getQuickNotes() {
+    const list = readJSON(KEYS.quickNotes, []);
+    return Array.isArray(list) ? list : [];
+  }
+
+  function saveQuickNotes(notes) {
+    writeJSON(KEYS.quickNotes, Array.isArray(notes) ? notes : []);
+    return true;
   }
 
   // ---- Custom confessions (user-authored, device-local) ----
@@ -308,6 +339,8 @@
     deleteCustomConfession: deleteCustomConfession,
     getArcadeStats: getArcadeStats,
     saveArcadeStats: saveArcadeStats,
+    getQuickNotes: getQuickNotes,
+    saveQuickNotes: saveQuickNotes,
     deepMerge: deepMerge
   };
 })();

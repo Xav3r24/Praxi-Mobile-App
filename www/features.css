@@ -1,0 +1,247 @@
+/* =========================================================
+   PRAXI — feature styles
+   Additive styles for: multi-widget picker + Daily preview,
+   note editor Undo/Redo, Rhapsody reflection field.
+   Mirrors the design tokens used across home.css/mobile.css.
+   ========================================================= */
+
+/* ---------------- Widget type picker (Companion / Daily) ---- */
+
+.widget-type-picker {
+  display: flex;
+  gap: 8px;
+
+  margin-top: 14px;
+}
+
+.widget-type-option {
+  flex: 1 1 0;
+
+  padding: 10px 12px;
+
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+
+  background: var(--surface-soft);
+  color: var(--text-muted);
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.widget-type-option:hover {
+  border-color: var(--accent);
+  color: var(--text-primary);
+}
+
+.widget-type-option.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+.widget-type-hint {
+  margin-bottom: 6px;
+}
+
+/* ---------------- Daily widget preview ---------------------- */
+
+.widget-preview-daily {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 6px;
+
+  aspect-ratio: 2.9 / 1;
+}
+
+.widget-preview-daily-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.widget-preview-daily-title {
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.widget-preview-daily-date {
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
+.widget-preview-daily-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+
+  min-width: 0;
+}
+
+.widget-preview-daily-key {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.widget-preview-daily-value {
+  color: var(--text-primary);
+  font-size: 12px;
+  font-weight: 700;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------------- Note editor Undo / Redo ------------------- */
+
+.new-note-undo-redo {
+  padding: 9px 12px;
+
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-medium, 10px);
+
+  background: var(--surface-soft);
+  color: var(--text-muted);
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.new-note-undo-redo:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--text-primary);
+}
+
+.new-note-undo-redo:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* ---------------- Rhapsody reflection ----------------------- */
+
+.rhapsody-reflection-label {
+  color: var(--text-muted);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+}
+
+.rhapsody-reflection-label em {
+  text-transform: none;
+  letter-spacing: 0;
+  font-style: italic;
+  opacity: 0.75;
+}
+
+.rhapsody-reflection-input {
+  width: 100%;
+  margin: 8px 0 2px;
+  padding: 12px 14px;
+
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-medium, 12px);
+
+  background: var(--surface-soft);
+  color: var(--text-primary);
+
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.45;
+
+  resize: vertical;
+  min-height: 72px;
+}
+
+.rhapsody-reflection-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.rhapsody-reflection-box {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+
+  margin-top: 22px;
+  padding: 14px 16px;
+
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-large, 14px);
+
+  background:
+    radial-gradient(circle at 90% 0%, rgba(157, 184, 255, 0.12), transparent 60%),
+    var(--surface-soft);
+}
+
+.rhapsody-reflection-icon {
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+.rhapsody-reflection-body {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rhapsody-reflection-text {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.5;
+
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+.rhapsody-reflection-edit {
+  align-self: flex-start;
+
+  margin-top: 2px;
+  padding: 6px 12px;
+
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+
+  background: transparent;
+  color: var(--accent);
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.rhapsody-reflection-edit:hover {
+  border-color: var(--accent);
+  background: rgba(157, 184, 255, 0.08);
+}
+
+/* Keep the completion modal actions from crowding on small screens. */
+@media (max-width: 480px) {
+  .rhapsody-completion-actions {
+    flex-wrap: wrap;
+  }
+}

@@ -1263,6 +1263,47 @@ function showRhapsodyCompletionPopup() {
 
   }
 
+  // Prefill any reflection already saved for today so it can be
+  // edited again from the Rhapsody page.
+  const reflectionInput =
+    document.getElementById(
+      'rhapsody-reflection-input'
+    );
+
+  if (reflectionInput) {
+
+    let savedReflection = '';
+
+    if (
+      window.PraxiStore &&
+      typeof window.PraxiStore.getRhapsodyStatus === 'function'
+    ) {
+
+      try {
+
+        const status =
+          window.PraxiStore.getRhapsodyStatus();
+
+        savedReflection =
+          (status && status.reflection)
+            ? String(status.reflection)
+            : '';
+
+      } catch (e) {
+        savedReflection = '';
+      }
+
+    }
+
+    reflectionInput.value = savedReflection;
+
+    reflectionInput.setAttribute(
+      'placeholder',
+      'A verse, a line, a thought worth keeping...'
+    );
+
+  }
+
 }
 
 function hideRhapsodyCompletionPopup() {
@@ -1297,9 +1338,45 @@ if (rhapsodyCompletionSubmit) {
     'click',
     async () => {
 
-      const topic =
+      let topic =
         rhapsodyTopicInput?.value
           ?.trim();
+
+      const reflectionInput =
+        document.getElementById(
+          'rhapsody-reflection-input'
+        );
+
+      const reflection =
+        reflectionInput
+          ? reflectionInput.value.trim()
+          : '';
+
+      // Allow editing just the reflection when today was already
+      // read — the topic is kept from the saved entry.
+      if (!topic) {
+
+        if (
+          window.PraxiStore &&
+          typeof window.PraxiStore.getRhapsodyStatus === 'function'
+        ) {
+
+          try {
+
+            const status =
+              window.PraxiStore.getRhapsodyStatus();
+
+            if (status && status.read) {
+              topic = status.topic || '';
+            }
+
+          } catch (e) {
+            topic = '';
+          }
+
+        }
+
+      }
 
       if (!topic) {
 
@@ -1314,13 +1391,18 @@ if (rhapsodyCompletionSubmit) {
 
         const result =
           await window.praxiAPI.markRhapsodyRead(
-            topic
+            topic,
+            reflection
           );
 
         console.log(
           'Rhapsody completed:',
           result
         );
+
+        if (reflectionInput) {
+          reflectionInput.value = '';
+        }
 
         hideRhapsodyCompletionPopup();
 
@@ -1813,6 +1895,59 @@ async function updateRhapsodyPageStatus() {
 
     /*
      * -------------------------
+     * TODAY'S REFLECTION
+     * -------------------------
+     */
+
+    const reflectionBox =
+      document.getElementById(
+        'rhapsody-today-reflection-box'
+      );
+
+    const reflectionText =
+      document.getElementById(
+        'rhapsody-today-reflection-text'
+      );
+
+    const todayReflection =
+      (status && status.reflection)
+        ? String(status.reflection).trim()
+        : '';
+
+    if (reflectionBox) {
+
+      if (todayReflection && status?.read) {
+
+        reflectionBox.classList.remove(
+          'hidden'
+        );
+
+        if (reflectionText) {
+
+          reflectionText.textContent =
+            todayReflection;
+
+        }
+
+      } else {
+
+        reflectionBox.classList.add(
+          'hidden'
+        );
+
+        if (reflectionText) {
+
+          reflectionText.textContent = '';
+
+        }
+
+      }
+
+    }
+
+
+    /*
+     * -------------------------
      * WEEKLY VIEW
      * -------------------------
      */
@@ -2230,7 +2365,7 @@ function renderNewNoteTags() {
 
         renderNewNoteTags();
 
-        updateNewNoteSaveStatus();
+        handleNewNoteEdited();
       });
     }
 
@@ -2253,7 +2388,7 @@ function addQuickNoteTag(tagText) {
 
   renderNewNoteTags();
 
-  updateNewNoteSaveStatus();
+  handleNewNoteEdited();
 }
 
 function renderNewNoteTagDropdown() {
@@ -2424,6 +2559,9 @@ renderNewNoteTags();
     saveStatus.textContent = 'Unsaved';
   }
 
+  // A fresh note starts from a clean undo history
+  resetNoteEditorHistory();
+
   showPage('new-note');
 
   if (titleInput) {
@@ -2458,6 +2596,8 @@ noteToolbarButtons.forEach((button) => {
     document.execCommand(command, false, null);
 
     updateNewNoteSaveStatus();
+
+    recordNoteEditorChange();
   });
 });
 
@@ -2467,20 +2607,185 @@ function updateNewNoteSaveStatus() {
   newNoteSaveStatus.textContent = 'Unsaved';
 }
 
+/* ---------------------------------------------------------
+   AUTO-SAVE
+   Debounced save of the in-progress note so closing the app
+   can't lose anything. A note created by autosave keeps its
+   id, so later keystrokes update the same note.
+   --------------------------------------------------------- */
+
+let noteAutoSaveTimer = null;
+
+function scheduleNoteAutoSave() {
+  window.clearTimeout(noteAutoSaveTimer);
+  noteAutoSaveTimer = window.setTimeout(() => {
+    saveCurrentQuickNote({ silent: true });
+  }, 800);
+}
+
+/* ---------------------------------------------------------
+   UNDO / REDO
+   In-memory history of editor snapshots (capped at 60). The
+   Undo/Redo buttons plus Ctrl+Z / Ctrl+Shift+Z (or Ctrl+Y)
+   move through the stack.
+   --------------------------------------------------------- */
+
+const NOTE_EDIT_HISTORY_LIMIT = 60;
+let noteEditStack = [];
+let noteEditIndex = -1;
+
+function captureNoteEditorSnapshot() {
+  const titleEl = document.getElementById('new-note-title');
+  const bodyEl = document.getElementById('new-note-body');
+  const themeEl = document.getElementById('new-note-theme');
+  return {
+    title: titleEl ? titleEl.value : '',
+    html: bodyEl ? bodyEl.innerHTML : '',
+    theme: themeEl ? themeEl.value : 'praxi',
+    tags: currentQuickNoteTags.slice()
+  };
+}
+
+function noteSnapshotsEqual(a, b) {
+  if (!a || !b) return false;
+  return (
+    a.title === b.title &&
+    a.html === b.html &&
+    a.theme === b.theme &&
+    (a.tags || []).join('\u0001') ===
+      (b.tags || []).join('\u0001')
+  );
+}
+
+function updateNoteUndoRedoButtons() {
+  const undoBtn = document.getElementById('new-note-undo');
+  const redoBtn = document.getElementById('new-note-redo');
+  if (undoBtn) undoBtn.disabled = noteEditIndex <= 0;
+  if (redoBtn) redoBtn.disabled = noteEditIndex >= noteEditStack.length - 1;
+}
+
+function applyNoteEditorSnapshot(snapshot) {
+  if (!snapshot) return;
+
+  const titleEl = document.getElementById('new-note-title');
+  const bodyEl = document.getElementById('new-note-body');
+  const themeEl = document.getElementById('new-note-theme');
+
+  if (titleEl) titleEl.value = snapshot.title;
+  if (bodyEl) bodyEl.innerHTML = snapshot.html || '';
+  if (themeEl) {
+    themeEl.value = snapshot.theme || 'praxi';
+    applyNewNoteTheme(themeEl.value);
+  }
+
+  currentQuickNoteTags = (snapshot.tags || []).slice();
+
+  renderNewNoteTags();
+
+  updateNewNoteSaveStatus();
+}
+
+function recordNoteEditorChange() {
+  const now = captureNoteEditorSnapshot();
+  const current = noteEditStack[noteEditIndex];
+
+  if (noteSnapshotsEqual(current, now)) {
+    scheduleNoteAutoSave();
+    return;
+  }
+
+  // Drop any redo future, then push the new state.
+  noteEditStack = noteEditStack.slice(0, noteEditIndex + 1);
+  noteEditStack.push(now);
+  noteEditIndex += 1;
+
+  if (noteEditStack.length > NOTE_EDIT_HISTORY_LIMIT) {
+    noteEditStack.shift();
+    noteEditIndex -= 1;
+  }
+
+  updateNoteUndoRedoButtons();
+  scheduleNoteAutoSave();
+}
+
+function resetNoteEditorHistory() {
+  noteEditStack = [captureNoteEditorSnapshot()];
+  noteEditIndex = 0;
+  updateNoteUndoRedoButtons();
+}
+
+function undoNoteEditor() {
+  if (noteEditIndex <= 0) return;
+  noteEditIndex -= 1;
+  applyNoteEditorSnapshot(noteEditStack[noteEditIndex]);
+  updateNoteUndoRedoButtons();
+  scheduleNoteAutoSave();
+}
+
+function redoNoteEditor() {
+  if (noteEditIndex >= noteEditStack.length - 1) return;
+  noteEditIndex += 1;
+  applyNoteEditorSnapshot(noteEditStack[noteEditIndex]);
+  updateNoteUndoRedoButtons();
+  scheduleNoteAutoSave();
+}
+
+function handleNewNoteEdited() {
+  updateNewNoteSaveStatus();
+  recordNoteEditorChange();
+}
+
 if (newNoteTitle) {
-  newNoteTitle.addEventListener('input', updateNewNoteSaveStatus);
+  newNoteTitle.addEventListener('input', handleNewNoteEdited);
 }
 
 if (newNoteBody) {
-  newNoteBody.addEventListener('input', updateNewNoteSaveStatus);
+  newNoteBody.addEventListener('input', handleNewNoteEdited);
 }
 
 if (newNoteTheme) {
   newNoteTheme.addEventListener('change', () => {
     applyNewNoteTheme(newNoteTheme.value);
-    updateNewNoteSaveStatus();
+    handleNewNoteEdited();
   });
 }
+
+document.addEventListener('keydown', (event) => {
+  const page = document.getElementById('page-new-note');
+  if (!page || !page.classList.contains('active')) return;
+
+  const mod = event.ctrlKey || event.metaKey;
+  if (!mod || event.altKey) return;
+
+  const key = event.key.toLowerCase();
+
+  if (key === 'z') {
+    event.preventDefault();
+    if (event.shiftKey) {
+      redoNoteEditor();
+    } else {
+      undoNoteEditor();
+    }
+  } else if (key === 'y') {
+    event.preventDefault();
+    redoNoteEditor();
+  }
+});
+
+const newNoteUndoButton = document.getElementById('new-note-undo');
+const newNoteRedoButton = document.getElementById('new-note-redo');
+
+if (newNoteUndoButton) {
+  newNoteUndoButton.addEventListener('click', undoNoteEditor);
+}
+
+if (newNoteRedoButton) {
+  newNoteRedoButton.addEventListener('click', redoNoteEditor);
+}
+
+// The editor is static HTML (hidden until opened); start it with a
+// clean undo history.
+resetNoteEditorHistory();
 
 function applyNewNoteTheme(theme) {
   const newNotePage = document.querySelector(
@@ -2500,6 +2805,17 @@ const QUICK_NOTES_STORAGE_KEY = 'praxiQuickNotes';
 let currentEditingQuickNoteId = null;
 
 function getQuickNotes() {
+  if (
+    window.PraxiStore &&
+    typeof window.PraxiStore.getQuickNotes === 'function'
+  ) {
+    try {
+      return window.PraxiStore.getQuickNotes();
+    } catch (e) {
+      // fall through to the direct read below
+    }
+  }
+
   try {
     const savedNotes = localStorage.getItem(QUICK_NOTES_STORAGE_KEY);
 
@@ -2518,6 +2834,17 @@ function getQuickNotes() {
 
 
 function saveQuickNotes(notes) {
+  if (
+    window.PraxiStore &&
+    typeof window.PraxiStore.saveQuickNotes === 'function'
+  ) {
+    try {
+      return window.PraxiStore.saveQuickNotes(notes);
+    } catch (e) {
+      // fall through to the direct write below
+    }
+  }
+
   try {
     localStorage.setItem(
       QUICK_NOTES_STORAGE_KEY,
@@ -2531,7 +2858,9 @@ function saveQuickNotes(notes) {
   }
 }
 
-function saveCurrentQuickNote() {
+function saveCurrentQuickNote(options) {
+  const opts = options || {};
+
   const titleInput = document.getElementById('new-note-title');
   const bodyInput = document.getElementById('new-note-body');
   const themeSelect = document.getElementById('new-note-theme');
@@ -2550,7 +2879,7 @@ function saveCurrentQuickNote() {
 
   // Don't save a completely empty note
   if (!title && !bodyText) {
-    if (saveStatus) {
+    if (saveStatus && !opts.silent) {
       saveStatus.textContent = 'Nothing to save';
     }
 
@@ -2581,9 +2910,9 @@ function saveCurrentQuickNote() {
 
       notes[noteIndex].theme = theme;
 
-notes[noteIndex].tags = tags;
+      notes[noteIndex].tags = tags;
 
-notes[noteIndex].updatedAt = now;
+      notes[noteIndex].updatedAt = now;
 
       saveQuickNotes(notes);
 
@@ -2595,6 +2924,10 @@ notes[noteIndex].updatedAt = now;
         'Quick Note updated:',
         notes[noteIndex]
       );
+
+      if (opts.silent) {
+        return;
+      }
 
       renderQuickNotes();
 
@@ -2648,6 +2981,14 @@ notes[noteIndex].updatedAt = now;
   }
 
   console.log('Quick Note created:', newNote);
+
+  if (opts.silent) {
+    // Keep editing this exact note so later keystrokes update it
+    // instead of creating duplicates.
+    currentEditingQuickNoteId = newNote.id;
+
+    return;
+  }
 
   renderQuickNotes();
 
@@ -3081,6 +3422,9 @@ renderNewNoteTags();
     saveStatus.textContent = 'Saved';
   }
 
+  // Restore a clean undo history for the loaded note
+  resetNoteEditorHistory();
+
   // Open the editor page
   showPage('new-note');
 
@@ -3240,6 +3584,24 @@ if (rhapsodyReadNow) {
         );
 
       }
+
+    }
+  );
+
+}
+
+const rhapsodyReflectionEdit =
+  document.getElementById(
+    'rhapsody-reflection-edit'
+  );
+
+if (rhapsodyReflectionEdit) {
+
+  rhapsodyReflectionEdit.addEventListener(
+    'click',
+    () => {
+
+      showRhapsodyCompletionPopup();
 
     }
   );

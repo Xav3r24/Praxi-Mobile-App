@@ -412,6 +412,40 @@
 
   const store = window.PraxiStore;
 
+  // Mirror a tiny snapshot of today's goals + Rhapsody status into the
+  // native side (SharedPreferences) so the home-screen widget can show
+  // them. Widgets cannot read the webview's localStorage, so this is the
+  // only channel. Called whenever either value changes.
+  function pushWidgetData() {
+    try {
+      if (
+        !window.PraxiNative ||
+        typeof window.PraxiNative.mirrorWidgetData !== 'function'
+      ) {
+        return;
+      }
+      store.ready().then(() => {
+        const goals = store.ensureCurrentDay();
+        const rhapsody = store.getRhapsodyStatus();
+        const goalList =
+          goals && goals.today && Array.isArray(goals.today.goals)
+            ? goals.today.goals
+            : [];
+        const goalsDone = goalList.filter((g) => g && g.completed).length;
+        window.PraxiNative.mirrorWidgetData(JSON.stringify({
+          goalsToday: goals && goals.today ? goals.today.date : null,
+          goalsDone: goalsDone,
+          goalsTotal: goalList.length,
+          rhapsodyRead: !!(rhapsody && rhapsody.read),
+          rhapsodyStreak: (rhapsody && rhapsody.streak) || 0,
+          updatedAt: Date.now()
+        }));
+      });
+    } catch (e) {
+      /* native bridge optional */
+    }
+  }
+
   const api = {
     // ---- real: backed by the single-writer store ----
     getSettings: () => store.ready().then(() => store.getSettings()),
@@ -421,7 +455,11 @@
       return saved;
     }),
     getDailyGoals: () => store.ready().then(() => store.ensureCurrentDay()),
-    saveDailyGoals: (data) => store.ready().then(() => store.saveGoals(data)),
+    saveDailyGoals: (data) => store.ready().then(() => {
+      const saved = store.saveGoals(data);
+      pushWidgetData();
+      return saved;
+    }),
     clearDailyGoalsNewDay: () => store.ready().then(() => {
       const g = store.getGoals();
       g.newDay = false;
@@ -439,7 +477,11 @@
 
     // ---- real: rhapsody reading state ----
     getRhapsodyStatus: () => store.ready().then(() => store.getRhapsodyStatus()),
-    markRhapsodyRead: (topic) => store.ready().then(() => store.markRhapsodyRead(topic)),
+    markRhapsodyRead: (topic, reflection) => store.ready().then(() => {
+      const result = store.markRhapsodyRead(topic, reflection);
+      pushWidgetData();
+      return result;
+    }),
 
     // ---- real: open the official Rhapsody / Pray-A-Thon sites in-app ----
     openRhapsody: () => { openDevotional(); return Promise.resolve(); },
@@ -472,4 +514,5 @@
   };
 
   window.praxiAPI = api;
+  window.PraxiWidgetSync = { refresh: pushWidgetData };
 })();

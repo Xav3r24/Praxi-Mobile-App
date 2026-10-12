@@ -26,6 +26,9 @@ public class MainActivity extends BridgeActivity {
 
     public static final String PREFS = "praxi_native";
     public static final String KEY_WIDGET_ENABLED = "widgetEnabled";
+    public static final String KEY_WIDGET_TYPE = "widgetType";
+    public static final String WIDGET_DATA_PREFS = "praxi_widget_data";
+    public static final String KEY_WIDGET_DATA = "widgetDataJson";
 
     /** Page to open when launched from a widget button (consumed by the web layer). */
     private String pendingRoute = null;
@@ -99,6 +102,7 @@ public class MainActivity extends BridgeActivity {
                     .apply();
             // Re-render any widgets already placed on the home screen.
             PraxiWidgetProvider.refreshAll(MainActivity.this);
+            PraxiGoalsWidgetProvider.refreshAll(MainActivity.this);
         }
 
         @JavascriptInterface
@@ -107,13 +111,49 @@ public class MainActivity extends BridgeActivity {
                     .getBoolean(KEY_WIDGET_ENABLED, true);
         }
 
+        /** Which widget type the user selected for the home screen. */
+        @JavascriptInterface
+        public void setWidgetType(String widgetType) {
+            String type = (widgetType == null || widgetType.trim().isEmpty())
+                    ? "companion"
+                    : widgetType.trim();
+            getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+                    .edit()
+                    .putString(KEY_WIDGET_TYPE, type)
+                    .apply();
+            PraxiWidgetProvider.refreshAll(MainActivity.this);
+            PraxiGoalsWidgetProvider.refreshAll(MainActivity.this);
+        }
+
+        @JavascriptInterface
+        public String getWidgetType() {
+            return getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+                    .getString(KEY_WIDGET_TYPE, "companion");
+        }
+
         /**
-         * Ask the system to pin the Praxi widget to the home screen.
-         * Returns true when the launcher supports the request (the
-         * user still confirms it) and false when it does not.
+         * Snapshot of today's goals + Rhapsody status mirrored from the
+         * web layer (which owns the data) so widgets can render them.
          */
         @JavascriptInterface
-        public boolean requestPinWidget() {
+        public void mirrorWidgetData(String payload) {
+            if (payload == null) {
+                return;
+            }
+            getSharedPreferences(WIDGET_DATA_PREFS, Context.MODE_PRIVATE)
+                    .edit()
+                    .putString(KEY_WIDGET_DATA, payload)
+                    .apply();
+            PraxiGoalsWidgetProvider.refreshAll(MainActivity.this);
+        }
+
+        /**
+         * Ask the system to pin the selected Praxi widget to the home
+         * screen. Returns true when the launcher supports the request
+         * (the user still confirms it) and false when it does not.
+         */
+        @JavascriptInterface
+        public boolean requestPinWidget(String widgetType) {
             try {
                 if (android.os.Build.VERSION.SDK_INT < 26) {
                     return false;
@@ -122,9 +162,13 @@ public class MainActivity extends BridgeActivity {
                 if (manager == null || !manager.isRequestPinAppWidgetSupported()) {
                     return false;
                 }
-                ComponentName provider = new ComponentName(
-                        MainActivity.this, PraxiWidgetProvider.class);
-                return manager.requestPinAppWidget(provider, null, null);
+                boolean isDaily = widgetType != null && "daily".equals(widgetType);
+                Class<?> providerClass = isDaily
+                        ? PraxiGoalsWidgetProvider.class
+                        : PraxiWidgetProvider.class;
+                ComponentName name = new ComponentName(
+                        MainActivity.this, providerClass);
+                return manager.requestPinAppWidget(name, null, null);
             } catch (Exception e) {
                 return false;
             }

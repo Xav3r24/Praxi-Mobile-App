@@ -29,6 +29,11 @@
     rel="stylesheet"
     href="games.css"
   >
+
+  <link
+    rel="stylesheet"
+    href="features.css"
+  >
 </head>
 
 <body>
@@ -1737,6 +1742,20 @@
       autocomplete="off"
     />
 
+    <label
+      for="rhapsody-reflection-input"
+      class="rhapsody-topic-label rhapsody-reflection-label"
+    >
+      What stood out to you today? <em>(optional)</em>
+    </label>
+
+    <textarea
+      id="rhapsody-reflection-input"
+      class="rhapsody-reflection-input"
+      rows="3"
+      placeholder="A verse, a line, a thought worth keeping..."
+    ></textarea>
+
     <div class="rhapsody-completion-actions">
 
       <button
@@ -1935,6 +1954,38 @@
               >
                 Not read yet
               </strong>
+
+            </div>
+
+          </div>
+
+          <div
+            class="rhapsody-reflection-box hidden"
+            id="rhapsody-today-reflection-box"
+          >
+
+            <div class="rhapsody-reflection-icon">
+              ✨
+            </div>
+
+            <div class="rhapsody-reflection-body">
+
+              <span class="rhapsody-reflection-label">
+                What stood out to you
+              </span>
+
+              <p
+                class="rhapsody-reflection-text"
+                id="rhapsody-today-reflection-text"
+              ></p>
+
+              <button
+                type="button"
+                id="rhapsody-reflection-edit"
+                class="rhapsody-reflection-edit"
+              >
+                Edit reflection
+              </button>
 
             </div>
 
@@ -2223,6 +2274,26 @@
     <option value="paper">Paper</option>
     <option value="midnight">Midnight Blue</option>
   </select>
+
+  <button
+    id="new-note-undo"
+    class="new-note-undo-redo"
+    type="button"
+    title="Undo last change (Ctrl+Z)"
+    disabled
+  >
+    ↩️ Undo
+  </button>
+
+  <button
+    id="new-note-redo"
+    class="new-note-undo-redo"
+    type="button"
+    title="Redo change (Ctrl+Shift+Z)"
+    disabled
+  >
+    ↪️ Redo
+  </button>
 
 
   <button
@@ -2919,10 +2990,10 @@
     <h2>Widget</h2>
 
     <p class="settings-muted">
-      Allow a home-screen widget that shows Praxi and the message
-      for the current time of day. The widget follows the same
-      reminder cadence as Praxi's notifications — it changes as the
-      day moves from morning to afternoon, evening, and night.
+      Put Praxi on your home screen. Companion shows the message for
+      the current time of day (it follows the same reminder cadence as
+      Praxi's notifications); Daily shows today's goals progress and
+      your Rhapsody status.
     </p>
 
     <label class="settings-toggle">
@@ -2932,6 +3003,30 @@
       >
       Allow home-screen widget
     </label>
+
+    <div class="widget-type-picker" id="widgetTypePicker">
+
+      <button
+        type="button"
+        class="widget-type-option active"
+        data-widget-type="companion"
+      >
+        Companion
+      </button>
+
+      <button
+        type="button"
+        class="widget-type-option"
+        data-widget-type="daily"
+      >
+        Daily
+      </button>
+
+    </div>
+
+    <p class="settings-muted widget-type-hint">
+      Choose which widget you want on your home screen, then add it below.
+    </p>
 
     <div
       class="widget-preview"
@@ -2970,9 +3065,61 @@
 
     </div>
 
+    <div
+      class="widget-preview widget-preview-daily hidden"
+      id="widgetPreviewDaily"
+    >
+
+      <div class="widget-preview-daily-head">
+
+        <span class="widget-preview-daily-title">
+          DAILY
+        </span>
+
+        <span
+          class="widget-preview-daily-date"
+          id="widget-preview-daily-date"
+        >
+          Today
+        </span>
+
+      </div>
+
+      <div class="widget-preview-daily-row">
+
+        <span class="widget-preview-daily-key">
+          Daily goals
+        </span>
+
+        <strong
+          class="widget-preview-daily-value"
+          id="widget-preview-daily-goals"
+        >
+          0 / 0 done
+        </strong>
+
+      </div>
+
+      <div class="widget-preview-daily-row">
+
+        <span class="widget-preview-daily-key">
+          Rhapsody
+        </span>
+
+        <strong
+          class="widget-preview-daily-value"
+          id="widget-preview-daily-rhapsody"
+        >
+          Not read yet
+        </strong>
+
+      </div>
+
+    </div>
+
     <p class="settings-tip">
-      Widescreen preview. On your home screen this appears as a
-      rounded widget with Praxi's icon and the current message.
+      Preview of the widget you selected. On your home screen it
+      appears as a rounded card derived from your chosen widget.
     </p>
 
     <div class="settings-actions">

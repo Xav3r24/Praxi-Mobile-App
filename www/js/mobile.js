@@ -425,13 +425,14 @@
     }
   }
 
-  function requestPinWidget() {
+  function requestPinWidget(widgetType) {
+    var type = widgetType || 'companion';
     try {
       if (
         window.PraxiNative &&
         typeof window.PraxiNative.requestPinWidget === 'function'
       ) {
-        var supported = window.PraxiNative.requestPinWidget();
+        var supported = window.PraxiNative.requestPinWidget(type);
         if (supported) {
           setWidgetStatus(
             'Confirm “Add to Home screen” in the dialog that just opened.'
@@ -439,7 +440,7 @@
         } else {
           setWidgetStatus(
             'This launcher can’t add widgets automatically. Long-press your ' +
-            'home screen, tap Widgets, then drag “Praxi” onto it.'
+            'home screen, tap Widgets, then drag the widget you picked onto it.'
           );
         }
         return supported;
@@ -448,9 +449,79 @@
       /* native bridge optional */
     }
     setWidgetStatus(
-      'Long-press your home screen, tap Widgets, then drag “Praxi” onto it.'
+      'Long-press your home screen, tap Widgets, then drag your chosen widget onto it.'
     );
     return false;
+  }
+
+  // Which widget type (companion message card vs. daily goals card) the
+  // user wants. The native side owns the type for pinning; settings is
+  // the fallback when the bridge is absent.
+  function getWidgetTypePref() {
+    try {
+      if (window.PraxiNative && typeof window.PraxiNative.getWidgetType === 'function') {
+        var t = window.PraxiNative.getWidgetType();
+        return (t === 'daily') ? 'daily' : 'companion';
+      }
+    } catch (e) { /* fall back to settings */ }
+    var s = window.PraxiStore.getSettings ? window.PraxiStore.getSettings() : {};
+    return (s.widgetType === 'daily') ? 'daily' : 'companion';
+  }
+
+  function applyWidgetTypeUI(type) {
+    var buttons = document.querySelectorAll('.widget-type-option');
+    Array.prototype.forEach.call(buttons, function (btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-widget-type') === type);
+    });
+    var companionPreview = document.getElementById('widgetPreview');
+    var dailyPreview = document.getElementById('widgetPreviewDaily');
+    if (companionPreview) companionPreview.classList.toggle('hidden', type !== 'companion');
+    if (dailyPreview) dailyPreview.classList.toggle('hidden', type !== 'daily');
+    if (type === 'daily') renderDailyWidgetPreview();
+  }
+
+  // Live mirror of the Daily widget: goals progress + Rhapsody status.
+  function renderDailyWidgetPreview() {
+    var goalsEl = document.getElementById('widget-preview-daily-goals');
+    var rhapsodyEl = document.getElementById('widget-preview-daily-rhapsody');
+    var dateEl = document.getElementById('widget-preview-daily-date');
+    if (!goalsEl && !rhapsodyEl && !dateEl) return;
+
+    window.PraxiStore.ready().then(function () {
+      var goals = window.PraxiStore.ensureCurrentDay();
+      var list = goals && goals.today && Array.isArray(goals.today.goals)
+        ? goals.today.goals
+        : [];
+      var done = list.filter(function (g) { return g && g.completed; }).length;
+
+      if (goalsEl) goalsEl.textContent = done + ' / ' + list.length + ' done';
+
+      var rs = window.PraxiStore.getRhapsodyStatus();
+      var rText = (rs && rs.read) ? 'Read today ✓' : 'Not read yet';
+      if (rs && rs.streak > 0) rText += ' · ' + rs.streak + '-day streak';
+      if (rhapsodyEl) rhapsodyEl.textContent = rText;
+
+      if (dateEl) {
+        var today = goals && goals.today && goals.today.date
+          ? goals.today.date
+          : null;
+        dateEl.textContent = formatShortDate(today);
+      }
+    });
+  }
+
+  function formatShortDate(iso) {
+    if (!iso) return 'Today';
+    try {
+      var parts = String(iso).split('-');
+      if (parts.length !== 3) return 'Today';
+      var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      var m = Number(parts[1]);
+      if (m < 1 || m > 12) return 'Today';
+      return months[m - 1] + ' ' + Number(parts[2]);
+    } catch (e) {
+      return 'Today';
+    }
   }
 
   function initWidgetSection() {
@@ -461,6 +532,47 @@
       var s = window.PraxiStore.getSettings() || {};
       cb.checked = !!s.widgetEnabled;
       pushWidgetFlag(cb.checked);
+
+      // Prime the native widget snapshot (goals + rhapsody) so the
+      // Daily widget has data even before the user changes anything.
+      if (
+        window.PraxiWidgetSync &&
+        typeof window.PraxiWidgetSync.refresh === 'function'
+      ) {
+        try { window.PraxiWidgetSync.refresh(); } catch (e) { /* optional */ }
+      }
+    });
+
+    // ---- widget type picker (Companion / Daily) ----
+    var pickerType = getWidgetTypePref();
+    applyWidgetTypeUI(pickerType);
+
+    var typeButtons = document.querySelectorAll('.widget-type-option');
+    Array.prototype.forEach.call(typeButtons, function (btn) {
+      btn.addEventListener('click', function () {
+        var next = btn.getAttribute('data-widget-type') === 'daily' ? 'daily' : 'companion';
+        var prev = getWidgetTypePref();
+        if (next === prev) return;
+
+        try {
+          if (window.PraxiNative && typeof window.PraxiNative.setWidgetType === 'function') {
+            window.PraxiNative.setWidgetType(next);
+          }
+        } catch (e) { /* optional */ }
+
+        try {
+          if (window.PraxiStore && typeof window.PraxiStore.saveSettings === 'function') {
+            window.PraxiStore.saveSettings({ widgetType: next });
+          }
+        } catch (e) { /* optional */ }
+
+        applyWidgetTypeUI(next);
+
+        // If the master toggle is on, offer to pin the newly chosen type.
+        if (cb && cb.checked) {
+          requestPinWidget(next);
+        }
+      });
     });
 
     cb.addEventListener('change', function () {
@@ -470,7 +582,7 @@
       // Turning the widget on is the natural moment to offer to pin
       // it, so the user actually gets it on the home screen.
       if (cb.checked) {
-        requestPinWidget();
+        requestPinWidget(getWidgetTypePref());
       } else {
         setWidgetStatus('');
       }
@@ -479,7 +591,7 @@
     var addBtn = document.getElementById('add-widget-button');
     if (addBtn) {
       addBtn.addEventListener('click', function () {
-        requestPinWidget();
+        requestPinWidget(getWidgetTypePref());
       });
     }
 

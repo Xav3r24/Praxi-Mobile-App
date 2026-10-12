@@ -5,4 +5,5 @@
     <string name="package_name">com.praxi.mobile</string>
     <string name="custom_url_scheme">com.praxi.mobile</string>
     <string name="widget_description">Praxi shows the message for the current time of day.</string>
+    <string name="widget_goals_description">Praxi Daily shows your goals progress and Rhapsody status.</string>
 </resources>
