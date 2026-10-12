@@ -2098,6 +2098,15 @@ if (confessionCategoryBackButton) {
                 break;
 
 
+              case 'Games':
+
+                showPage(
+                  'games'
+                );
+
+                break;
+
+
               case 'Settings':
 
                 showPage(

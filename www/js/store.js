@@ -14,7 +14,8 @@
     goals: 'praxi.dailyGoals',
     moments: 'praxi.momentLedger',
     rhapsody: 'praxi.rhapsody',
-    customConfessions: 'praxi.customConfessions'
+    customConfessions: 'praxi.customConfessions',
+    arcade: 'praxi.arcade'
   };
 
   // Fallback defaults (mirror of desktop config/settings.json).
@@ -247,6 +248,47 @@
     return moments[moments.length - 1];
   }
 
+  // ---- Praxi Arcade (Games) stats ----
+  // Additive, backward-compatible key. Missing/corrupt data falls back
+  // to safe defaults and never throws, so existing installs are
+  // unaffected. Only this store writes it.
+
+  const ARCADE_DEFAULTS = {
+    bestScore: 0,
+    roundsPlayed: 0,
+    bestAccuracy: 0,
+    lastPlayedAt: 0
+  };
+
+  function num(value, fallback) {
+    const n = Number(value);
+    return Number.isFinite(n) && n >= 0 ? n : fallback;
+  }
+
+  function getArcadeStats() {
+    const raw = readJSON(KEYS.arcade, null);
+    const source = raw && typeof raw === 'object' ? raw : {};
+    return {
+      bestScore: num(source.bestScore, ARCADE_DEFAULTS.bestScore),
+      roundsPlayed: num(source.roundsPlayed, ARCADE_DEFAULTS.roundsPlayed),
+      bestAccuracy: num(source.bestAccuracy, ARCADE_DEFAULTS.bestAccuracy),
+      lastPlayedAt: num(source.lastPlayedAt, ARCADE_DEFAULTS.lastPlayedAt)
+    };
+  }
+
+  function saveArcadeStats(patch) {
+    const current = getArcadeStats();
+    const incoming = patch && typeof patch === 'object' ? patch : {};
+    const next = {
+      bestScore: num(incoming.bestScore, current.bestScore),
+      roundsPlayed: num(incoming.roundsPlayed, current.roundsPlayed),
+      bestAccuracy: num(incoming.bestAccuracy, current.bestAccuracy),
+      lastPlayedAt: num(incoming.lastPlayedAt, current.lastPlayedAt)
+    };
+    writeJSON(KEYS.arcade, next);
+    return next;
+  }
+
   window.PraxiStore = {
     init: init,
     ready: ready,
@@ -264,6 +306,8 @@
     getCustomConfessions: getCustomConfessions,
     addCustomConfession: addCustomConfession,
     deleteCustomConfession: deleteCustomConfession,
+    getArcadeStats: getArcadeStats,
+    saveArcadeStats: saveArcadeStats,
     deepMerge: deepMerge
   };
 })();

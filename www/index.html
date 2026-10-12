@@ -24,6 +24,11 @@
     rel="stylesheet"
     href="css/mobile.css"
   >
+
+  <link
+    rel="stylesheet"
+    href="games.css"
+  >
 </head>
 
 <body>
@@ -156,6 +161,14 @@
             alt=""
           >
           <span>Moments</span>
+        </button>
+
+        <button
+          class="nav-item"
+          type="button"
+        >
+          <span>🎮</span>
+          <span>Games</span>
         </button>
 
       </nav>
@@ -3059,8 +3072,257 @@
 
 </div>
 
+<!-- =========================================================
+     PRAXI ARCADE (GAMES)
+     ========================================================= -->
+<section
+  class="app-page"
+  id="page-games"
+>
+  <div class="arcade-section">
+    <h1 class="arcade-title">Praxi Arcade</h1>
+    <p class="arcade-subtitle">Play. Progress. Grow.</p>
+
+    <div class="arcade-grid">
+
+      <article class="arcade-card">
+        <img
+          id="scramble-card-art"
+          class="arcade-card-art"
+          alt=""
+          hidden
+        >
+        <div
+          id="scramble-card-icon"
+          class="arcade-card-icon"
+        >🔤</div>
+        <div class="arcade-card-body">
+          <span class="arcade-card-tag">PLAYABLE</span>
+          <h2>Word Scramble</h2>
+          <p>Rhapsody Edition — unscramble devotional words, use a hint if you need one, and grow your vocabulary of faith.</p>
+          <p
+            id="arcade-scramble-best"
+            class="arcade-card-meta"
+          >No rounds played yet</p>
+        </div>
+        <button
+          id="start-word-scramble"
+          class="arcade-play-button"
+          type="button"
+        >
+          Play Word Scramble
+        </button>
+      </article>
+
+      <article
+        id="arcade-soar-card"
+        class="arcade-card"
+      >
+        <div class="arcade-soar-art">
+          <span class="arcade-soar-badge">IN DEVELOPMENT</span>
+          <img
+            id="soar-art"
+            alt="SOAR"
+          >
+          <div
+            id="soar-card-icon"
+            class="arcade-card-icon"
+            hidden
+          >🚀</div>
+        </div>
+        <div class="arcade-card-body">
+          <h2>SOAR</h2>
+          <p>An endless-runner adventure with Praxi. Take flight, dodge the obstacles, and see how far you can go.</p>
+        </div>
+        <button
+          id="open-soar"
+          class="arcade-play-button arcade-play-button-soon"
+          type="button"
+        >
+          Coming soon
+        </button>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     WORD SCRAMBLE
+     ========================================================= -->
+<section
+  class="app-page games-game-page"
+  id="page-word-scramble"
+>
+  <div class="games-game-header">
+    <button
+      id="word-scramble-back"
+      class="games-back-button"
+      type="button"
+    >
+      ← Arcade
+    </button>
+    <div class="games-progress">
+      <span id="scramble-progress">Question 1 of 10</span>
+      <span id="scramble-score-label">Score: 0</span>
+    </div>
+  </div>
+
+  <div
+    id="scramble-play"
+    class="scramble-panel"
+  >
+    <div
+      id="scramble-word"
+      class="scramble-word"
+    ></div>
+    <div class="scramble-meta">
+      <span
+        id="scramble-length"
+        class="scramble-chip"
+      ></span>
+      <span
+        id="scramble-category"
+        class="scramble-chip"
+      ></span>
+    </div>
+
+    <p
+      id="scramble-hint"
+      class="scramble-hint"
+      hidden
+    ></p>
+    <p
+      id="scramble-answer"
+      class="scramble-answer"
+      hidden
+    ></p>
+
+    <input
+      id="scramble-input"
+      class="scramble-input"
+      type="text"
+      inputmode="text"
+      autocomplete="off"
+      autocorrect="off"
+      autocapitalize="characters"
+      spellcheck="false"
+      placeholder="Type your answer"
+      aria-label="Your answer"
+    >
+
+    <p
+      id="scramble-feedback"
+      class="scramble-feedback"
+    ></p>
+
+    <div class="scramble-actions">
+      <button
+        id="scramble-hint-button"
+        class="scramble-secondary"
+        type="button"
+      >
+        💡 Hint
+      </button>
+      <button
+        id="scramble-submit"
+        class="scramble-primary"
+        type="button"
+      >
+        Submit
+      </button>
+      <button
+        id="scramble-skip"
+        class="scramble-secondary"
+        type="button"
+      >
+        Skip
+      </button>
+    </div>
+    <div class="scramble-actions scramble-actions-advance">
+      <button
+        id="scramble-next"
+        class="scramble-primary"
+        type="button"
+        hidden
+      >
+        Next →
+      </button>
+    </div>
+  </div>
+
+  <div
+    id="scramble-results"
+    class="scramble-panel scramble-results"
+    hidden
+  >
+    <span class="arcade-card-tag">ROUND COMPLETE</span>
+    <h2>Nicely done!</h2>
+    <div class="scramble-results-grid">
+      <div class="scramble-result">
+        <strong id="result-score">0</strong>
+        <span>Score</span>
+      </div>
+      <div class="scramble-result">
+        <strong id="result-correct">0 / 10</strong>
+        <span>Correct</span>
+      </div>
+      <div class="scramble-result">
+        <strong id="result-accuracy">0%</strong>
+        <span>Accuracy</span>
+      </div>
+      <div class="scramble-result">
+        <strong id="result-best">0</strong>
+        <span>Best score</span>
+      </div>
+    </div>
+    <div class="scramble-actions">
+      <button
+        id="scramble-replay"
+        class="scramble-primary"
+        type="button"
+      >
+        Play again
+      </button>
+      <button
+        id="scramble-results-back"
+        class="scramble-secondary"
+        type="button"
+      >
+        Back to Arcade
+      </button>
+    </div>
+  </div>
+</section>
+
 </main>
 
+</div>
+
+<!-- =========================================================
+     SOAR COMING-SOON MODAL
+     ========================================================= -->
+<div
+  id="soar-modal"
+  class="soar-modal-overlay hidden"
+>
+  <div
+    class="soar-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="soar-modal-title"
+  >
+    <span class="soar-modal-badge">IN DEVELOPMENT</span>
+    <h2 id="soar-modal-title">SOAR</h2>
+    <p>Ready for takeoff? SOAR is still in development. Praxi is getting everything ready for your first adventure!</p>
+    <button
+      id="soar-modal-dismiss"
+      class="scramble-primary"
+      type="button"
+    >
+      Got it
+    </button>
+  </div>
 </div>
 
 
@@ -3068,6 +3330,9 @@
 <script src="js/bridge.js"></script>
 <script src="daily-goals.js"></script>
 <script src="home.js"></script>
+<script src="js/word-bank.js"></script>
+<script src="js/scramble-core.js"></script>
+<script src="games.js"></script>
 <script src="js/mobile.js"></script>
 
 </body>

@@ -1,0 +1,405 @@
+/* =========================================================
+   PRAXI ARCADE (GAMES) STYLES
+   Uses the shared dark-theme tokens from home.css (blue accent,
+   rounded surfaces). Adapts to the light theme automatically
+   through the same CSS variables.
+   ========================================================= */
+
+/* Keep [hidden] authoritative even when a rule sets display. */
+#page-games [hidden],
+#page-word-scramble [hidden],
+.soar-modal-overlay[hidden] {
+  display: none !important;
+}
+
+/* ---------------- Arcade landing ---------------- */
+
+.arcade-section {
+  padding-bottom: 40px;
+}
+
+.arcade-title {
+  margin: 6px 0 2px;
+  font-size: 30px;
+  letter-spacing: 0.2px;
+}
+
+.arcade-subtitle {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 15px;
+  letter-spacing: 0.4px;
+}
+
+.arcade-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  margin-top: 22px;
+}
+
+@media (min-width: 720px) {
+  .arcade-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.arcade-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-large, 22px);
+  background:
+    radial-gradient(circle at 88% 6%, var(--accent-soft), transparent 55%),
+    var(--surface);
+  box-shadow: 0 10px 30px var(--card-shadow, rgba(0, 0, 0, 0.12));
+  overflow: hidden;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.arcade-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+}
+
+.arcade-card-art,
+.arcade-soar-art img {
+  width: 100%;
+  height: 180px;
+  object-fit: contain;
+  border-radius: var(--radius-medium, 16px);
+  background: var(--surface-soft);
+}
+
+.arcade-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 180px;
+  font-size: 64px;
+  border-radius: var(--radius-medium, 16px);
+  background: var(--surface-soft);
+}
+
+.arcade-card-body h2 {
+  margin: 0 0 4px;
+  font-size: 21px;
+}
+
+.arcade-card-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.arcade-card-body p {
+  margin: 10px 0 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.arcade-card-meta {
+  margin-top: 12px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.arcade-soar-art {
+  position: relative;
+}
+
+.arcade-soar-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #fff;
+  background: rgba(4, 63, 210, 0.92);
+}
+
+.arcade-play-button {
+  margin-top: auto;
+  padding: 13px 18px;
+  border: none;
+  border-radius: var(--radius-medium, 16px);
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--accent);
+  cursor: pointer;
+}
+
+.arcade-play-button:active {
+  transform: scale(0.99);
+}
+
+.arcade-play-button-soon {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+/* ---------------- Word Scramble game ---------------- */
+
+.games-game-page {
+  padding-bottom: 60px;
+}
+
+.games-game-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.games-back-button {
+  padding: 9px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-medium, 16px);
+  background: var(--surface);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.games-progress {
+  display: flex;
+  gap: 14px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.games-progress #scramble-score-label {
+  color: var(--accent);
+}
+
+.scramble-panel {
+  padding: 24px 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-large, 22px);
+  background: var(--surface);
+  box-shadow: 0 10px 30px var(--card-shadow, rgba(0, 0, 0, 0.12));
+}
+
+.scramble-word {
+  margin: 14px 0 16px;
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: 6px;
+  text-align: center;
+  word-break: break-word;
+  color: var(--text-primary);
+}
+
+.scramble-meta {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.scramble-chip {
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: var(--text-secondary);
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+}
+
+.scramble-hint {
+  margin: 4px 0 14px;
+  padding: 12px 14px;
+  border-radius: var(--radius-medium, 16px);
+  background: var(--warning-soft);
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.scramble-input {
+  width: 100%;
+  padding: 15px 16px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-medium, 16px);
+  background: var(--surface-soft);
+  color: var(--text-primary);
+  font-size: 18px;
+  letter-spacing: 2px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.scramble-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.scramble-feedback {
+  min-height: 22px;
+  margin: 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.scramble-feedback-correct { color: var(--success); }
+.scramble-feedback-incorrect { color: var(--danger); }
+
+.scramble-answer {
+  margin: 0 0 10px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.scramble-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.scramble-actions-advance {
+  margin-top: 12px;
+}
+
+.scramble-primary,
+.scramble-secondary {
+  flex: 1;
+  padding: 14px 16px;
+  border-radius: var(--radius-medium, 16px);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.scramble-primary {
+  border: none;
+  color: #fff;
+  background: var(--accent);
+}
+
+.scramble-secondary {
+  border: 1px solid var(--border-strong);
+  color: var(--text-primary);
+  background: var(--surface-soft);
+}
+
+.scramble-primary:disabled,
+.scramble-secondary:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* ---------------- Results ---------------- */
+
+.scramble-results h2 {
+  margin: 8px 0 18px;
+}
+
+.scramble-results-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.scramble-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-medium, 16px);
+  background: var(--surface-soft);
+}
+
+.scramble-result strong {
+  font-size: 24px;
+  color: var(--accent);
+}
+
+.scramble-result span {
+  font-size: 12px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ---------------- SOAR coming-soon modal ---------------- */
+
+.soar-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 4000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px;
+  background: var(--dialog-overlay, rgba(0, 0, 0, 0.5));
+}
+
+.soar-modal {
+  width: 100%;
+  max-width: 420px;
+  padding: 26px 22px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-large, 22px);
+  background: var(--surface);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+.soar-modal-badge {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #fff;
+  background: rgba(4, 63, 210, 0.92);
+}
+
+.soar-modal h2 {
+  margin: 0 0 10px;
+  font-size: 24px;
+}
+
+.soar-modal p {
+  margin: 0 0 20px;
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.soar-modal .scramble-primary {
+  width: 100%;
+}
