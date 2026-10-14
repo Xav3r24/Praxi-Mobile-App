@@ -46,7 +46,9 @@
     quietHours: { enabled: false, start: '22:00', end: '07:00' },
     pauseUntil: 0,
     summonButtonPosition: 'top-right',
-    messageLibrary: {}
+    messageLibrary: {},
+    userName: 'Xavier',
+    userNamePrompted: false
   };
 
   let settings = null;

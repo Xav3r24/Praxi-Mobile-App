@@ -5400,6 +5400,7 @@ function fillPraxiSettings(
   getSettingsElement('rhapsodyIntervalHours').value =
     settings.rhapsodyIntervalHours ?? 1;
 
+  getSettingsElement('userName').value = settings.userName ?? 'Xavier';
 
   getSettingsElement('breaksEnabled').checked =
     settings.reminders?.breaks?.enabled ?? false;
@@ -5675,6 +5676,12 @@ settings.theme =
         ) || 1
       )
     );
+
+
+  settings.userName =
+    getSettingsElement(
+      'userName'
+    ).value || 'Xavier';
 
 
   // Normalise the reminder flags. Older builds stored these as

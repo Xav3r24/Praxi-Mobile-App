@@ -102,7 +102,10 @@
   function updateGreeting() {
     var el = document.getElementById('home-greeting');
     if (!el) return;
-    var text = greetingFor(currentPeriod().key) + ', Xavier.';
+    var userName = window.PraxiStore && window.PraxiStore.getSettings
+      ? (window.PraxiStore.getSettings().userName || 'Xavier')
+      : 'Xavier';
+    var text = greetingFor(currentPeriod().key) + ', ' + userName + '.';
     if (el.textContent !== text) el.textContent = text;
   }
 

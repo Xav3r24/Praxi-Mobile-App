@@ -53,7 +53,13 @@
 
   function greeting() {
     const lib = window.PraxiStore.getMessages();
-    const pool = (lib.timeMessages && lib.timeMessages[getTimeOfDay()]) || lib.greetings || ['Hi Xavier.'];
+    let pool = (lib.timeMessages && lib.timeMessages[getTimeOfDay()]) || lib.greetings || ['Hi Xavier.'];
+    const userName = (window.PraxiStore.getSettings && window.PraxiStore.getSettings().userName) || 'Xavier';
+    if (pool && Array.isArray(pool)) {
+      pool = pool.map(function (msg) {
+        return String(msg).replace(/Xavier/g, userName);
+      });
+    }
     $('greeting').textContent = pick(pool);
   }
 
